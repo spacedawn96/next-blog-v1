@@ -9,7 +9,8 @@
     "generate": "graphql-codegen --config codegen.yml",
     "type-check": "tsc",
     "dev": "next dev",
-    "start": "next start -p $PORT"
+    "start": "next start -p $PORT",
+    "client": "next start"
   },
   "jest": {
     "setupFilesAfterEnv": [
