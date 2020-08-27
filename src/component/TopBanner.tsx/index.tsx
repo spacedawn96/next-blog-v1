@@ -52,6 +52,7 @@ export const item2 = ['write' , 'menu'];
 function TopBanner(props: TopBannerProps) {
   const { data } = useGetUser();
 
+  console.log(data);
   return (
     <TopBannerTap>
       <div className="layout-wrapper">
