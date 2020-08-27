@@ -4,8 +4,11 @@ import { MeQuery, MeDocument } from 'src/type/apolloComponent';
 import { loginMutation } from 'src/graphql/user';
 import { useRouter } from 'next/router';
 import useForms from 'src/component/common/useForm';
+import { useContext } from 'react';
+import { AuthContext } from 'src/component/common/Auth';
 
 export default function useLogin() {
+  const context = useContext(AuthContext);
   const [inputs, handleChange] = useForms({
     email: '',
     password: '',
@@ -22,7 +25,7 @@ export default function useLogin() {
         if (!data) {
           return null;
         }
-
+        context.login(data);
         store.writeQuery<MeQuery>({
           query: MeDocument,
           data: {
