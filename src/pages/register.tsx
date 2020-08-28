@@ -7,7 +7,7 @@ import useRegister from 'src/hooks/useRegister';
 import Card from 'src/component/Card';
 import Footer from 'src/component/Footer';
 import RegisterForm from 'src/component/forms/RegisterForm';
-import { withApollo } from 'src/lib/withApollo';
+
 // import useRegister from 'src/lib/hooks/useLogin';
 // import { registerMutation } from 'src/lib/graphql/mutations/register';
 // import { useApolloClient, useMutation } from 'react-apollo';
@@ -39,4 +39,4 @@ function Register(props: RegisterProps) {
   );
 }
 
-export default withApollo({ ssr: false })(Register);
+export default Register;

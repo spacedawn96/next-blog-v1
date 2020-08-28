@@ -10,7 +10,7 @@ import { GET_Posts, Get_TopPost } from 'src/graphql/post';
 import media from 'src/styles/media';
 import useGetTopPosts from '../hooks/useGetTopPosts';
 import useGetPosts from 'src/hooks/useGetPosts';
-import { withApollo } from 'src/lib/withApollo';
+
 
 
 const TopBackground = styled.div`
@@ -134,4 +134,4 @@ export async function getStaticProps(ctx) {
 }
 
 
-export default withApollo({ ssr: false })( IndexPage);
+export default IndexPage;

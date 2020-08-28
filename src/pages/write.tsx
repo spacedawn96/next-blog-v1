@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import EditorMain from 'src/component/Editor/TextEditor';
-import { withApollo } from 'src/lib/withApollo';
 
 const WriteTap = styled.div``;
 
@@ -15,4 +14,4 @@ function Write(props: WriteProps) {
   );
 }
 
-export default withApollo({ ssr: false })(Write);
+export default Write;
