@@ -46,7 +46,7 @@ export type TopBannerProps = {
   datas?: number;
 };
 
-export const item = ['login!', 'register'];
+export const item = ['login', 'register'];
 export const item2 = ['write' , 'menu'];
 
 function TopBanner(props: TopBannerProps) {
