@@ -4,7 +4,7 @@ import jwtDecode from 'jwt-decode';
 const initialState = {
   user: null,
 };
-if (typeof window === 'undefined') {
+if (typeof window !== 'undefined') {
   if (localStorage.getItem('jid')) {
     const decodedToken = jwtDecode(localStorage.getItem('jid'));
 
@@ -43,7 +43,7 @@ function AuthProvider(props) {
   const [state, dispatch] = useReducer(authReducer, initialState);
 
   function login(userData) {
-    if (typeof window === 'undefined') {
+    if (typeof window !== 'undefined') {
       localStorage.setItem('jid', userData.token);
     }
     dispatch({
@@ -53,7 +53,7 @@ function AuthProvider(props) {
   }
 
   function logout() {
-    if (typeof window === 'undefined') {
+    if (typeof window !== 'undefined') {
       localStorage.removeItem('jid');
     }
     dispatch({ type: 'LOGOUT' });
