@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import home from '../styles/error404.module.css';
 import Home from 'src/component/Home';
+import { withApollo } from 'src/lib/withApollo';
 export const Logo = require('../component/TopBanner.tsx/logo.png');
 
 const Error404Tap = styled.div`
@@ -63,4 +64,4 @@ function Error404(props: Error404Props) {
   );
 }
 
-export default Error404;
+export default withApollo({ ssr: false })(Error404);

@@ -31,6 +31,7 @@ import useDeletePost from 'src/hooks/useDeletePost';
 import CommentForm from 'src/component/forms/CommentForm';
 import useGetPosts from 'src/hooks/useGetPosts';
 import Buttons from 'src/component/common/Button';
+import { withApollo } from 'src/lib/withApollo';
 
 
 const PostPageTap = styled.div`
@@ -366,4 +367,7 @@ function PostPage(props: PostPageProps) {
   );
 }
 
-export default PostPage;
+
+
+export default withApollo({ ssr: false })(PostPage);
+

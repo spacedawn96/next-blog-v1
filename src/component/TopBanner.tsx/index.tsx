@@ -59,7 +59,7 @@ function TopBanner(props: TopBannerProps) {
         <Navbar items={data?.me ? item2 : item} Logo={Logo} color="#fff" />
         {props.datas ? (
           <BarCenter>
-            <Barlog>Dev Post</Barlog>
+            <Barlog>Dev Posts</Barlog>
             <BarPost>{props.datas} ARTICLES</BarPost>
           </BarCenter>
         ) : (
