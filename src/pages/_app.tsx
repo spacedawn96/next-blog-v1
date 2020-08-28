@@ -4,7 +4,6 @@ import NProgress from 'nprogress'; //nprogress module
 import 'nprogress/nprogress.css'; //styles of nprogress
 import { Provider } from 'react-redux';
 import store from 'src/store/store';
-import { AuthProvider } from 'src/component/common/Auth';
 import { ApolloProvider } from '@apollo/client';
 import { useApollo } from 'src/lib/apollo';
 //Binding events.
@@ -16,11 +15,9 @@ function App({ Component, pageProps }) {
   const apolloClient = useApollo(pageProps.initialApolloState);
   return (
     <Provider store={store}>
-      <AuthProvider>
-        <ApolloProvider client={apolloClient}>
-          <Component {...pageProps} />
-        </ApolloProvider>
-      </AuthProvider>
+      <ApolloProvider client={apolloClient}>
+        <Component {...pageProps} />
+      </ApolloProvider>
     </Provider>
   );
 }
