@@ -4,14 +4,15 @@ import jwtDecode from 'jwt-decode';
 const initialState = {
   user: null,
 };
+if (typeof window === 'undefined') {
+  if (localStorage.getItem('jid')) {
+    const decodedToken = jwtDecode(localStorage.getItem('jid'));
 
-if (window.localStorage.getItem('jid')) {
-  const decodedToken = jwtDecode(window.localStorage.getItem('jid'));
-
-  if (decodedToken.exp * 1000 < Date.now()) {
-    window.localStorage.removeItem('jid');
-  } else {
-    initialState.user = decodedToken;
+    if (decodedToken.exp * 1000 < Date.now()) {
+      localStorage.removeItem('jid');
+    } else {
+      initialState.user = decodedToken;
+    }
   }
 }
 
@@ -42,7 +43,9 @@ function AuthProvider(props) {
   const [state, dispatch] = useReducer(authReducer, initialState);
 
   function login(userData) {
-    window.localStorage.setItem('jid', userData.token);
+    if (typeof window === 'undefined') {
+      localStorage.setItem('jid', userData.token);
+    }
     dispatch({
       type: 'LOGIN',
       payload: userData,
@@ -50,7 +53,9 @@ function AuthProvider(props) {
   }
 
   function logout() {
-    window.localStorage.removeItem('jid');
+    if (typeof window === 'undefined') {
+      localStorage.removeItem('jid');
+    }
     dispatch({ type: 'LOGOUT' });
   }
 
