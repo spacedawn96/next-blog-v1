@@ -10,6 +10,7 @@ import { GET_Posts, Get_TopPost } from 'src/graphql/post';
 import media from 'src/styles/media';
 import useGetTopPosts from '../hooks/useGetTopPosts';
 import useGetPosts from 'src/hooks/useGetPosts';
+import { initializeApollo } from 'src/lib/apollo';
 
 
 
@@ -116,7 +117,8 @@ function IndexPage(props: HomePageProps) {
 }
 
 export async function getStaticProps(ctx) {
-  const { apolloClient } = ctx;
+  const apolloClient = initializeApollo();
+
   await apolloClient.query({
     query: GET_Posts,
   });
@@ -132,6 +134,5 @@ export async function getStaticProps(ctx) {
     revalidate: 1,
   };
 }
-
 
 export default IndexPage;

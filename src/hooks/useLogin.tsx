@@ -5,8 +5,10 @@ import { loginMutation } from 'src/graphql/user';
 import { useRouter } from 'next/router';
 import useForms from 'src/component/common/useForm';
 import { useContext } from 'react';
+import { Cookies } from 'react-cookie';
 
 export default function useLogin() {
+  const cookies = new Cookies();
   const [inputs, handleChange] = useForms({
     email: '',
     password: '',
@@ -22,6 +24,9 @@ export default function useLogin() {
       update: (store, { data }) => {
         if (!data) {
           return null;
+        }
+        if (data) {
+          cookies.set('jid', data.login.accessToken);
         }
 
         store.writeQuery<MeQuery>({
