@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 
 export type TagsFormProps = {
-  addTag: any;
+  addTag: (e: string) => void;
 };
 
 function TagsForm(props: TagsFormProps) {

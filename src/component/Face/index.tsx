@@ -7,11 +7,11 @@ const FaceTap = styled.div``;
 
 export type FaceProps = {
   username?: string;
-  followHandleSubmit?: any;
-  error: any;
-  unFollowHandleSubmit?: any;
+  followHandleSubmit?: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
+  error?: any;
+  unFollowHandleSubmit?: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
   unfollowError?: any;
-  BooleanIsFollowing: any;
+  BooleanIsFollowing: boolean;
 };
 
 function Face(props: FaceProps) {

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import styles from './styles.module.css';
+import imageCompression from 'browser-image-compression';
 
 export default class ImageAdd extends Component {
   // Start the popover closed
@@ -52,20 +53,33 @@ export default class ImageAdd extends Component {
     this.setState({ fileInputState: evt.target.value });
   };
 
-  handleFileInputChange = e => {
-    const file = e.target.files[0];
-    this.setState({ selectedFile: file });
-    this.setState({ fileInputState: e.target.value });
-  };
-
-  handleSubmitFile = e => {
+  handleFileInputChange = async e => {
     e.preventDefault();
+    const file = e.target.files[0];
+
+    const options = {
+      maxSizeMB: 0.1,
+      maxWidthOrHeight: 1920,
+      useWebWorker: true,
+    };
+
+    try {
+      console.log(e.target.value);
+      const compressedFile = await imageCompression(file, options);
+      this.setState({ selectedFile: compressedFile });
+    } catch (error) {
+      console.log(error);
+    }
     if (!this.state.selectedFile) return;
     const reader = new FileReader();
     reader.readAsDataURL(this.state.selectedFile);
     reader.onloadend = () => {
       this.addImage(reader.result);
     };
+  };
+
+  handleSubmitFile = e => {
+    e.preventDefault();
   };
 
   render() {
@@ -84,26 +98,12 @@ export default class ImageAdd extends Component {
           </button>
           <div className={popoverClassName} onClick={this.onPopoverClick}>
             <input
-              type="text"
-              placeholder="Paste the image url …"
-              className={styles.addImageInput}
-              onChange={this.changeUrl}
-              value={this.state.fileInputState}
-            />
-            <input
               id="fileInput"
               type="file"
               name="image"
               onChange={this.handleFileInputChange}
               value={this.state.fileInputState}
-              className={styles.addImageConfirmButton}
             />
-            <button
-              className={styles.addImageConfirmButton}
-              type="button"
-              onClick={this.handleSubmitFile}>
-              Add
-            </button>
           </div>
         </div>
       </>

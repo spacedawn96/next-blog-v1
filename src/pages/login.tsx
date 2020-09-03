@@ -6,8 +6,6 @@ import useLogin from 'src/hooks/useLogin';
 import Card from 'src/component/Card';
 import Footer from 'src/component/Footer';
 import LoginForm from 'src/component/forms/LoginForm';
-import Cookies from 'cookies';
-
 const LoginTap = styled.div`
   background: #eceff3;
   height: 80vh;

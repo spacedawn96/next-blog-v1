@@ -22,7 +22,7 @@ const TagsTap = styled.div`
 
 export type TagsProps = {
   tags: any;
-  deleteTag: any;
+  deleteTag: (e: string) => void;
   index: any;
 };
 

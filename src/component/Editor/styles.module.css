@@ -80,22 +80,7 @@ addImage {
     background: #fefefe;
   }
   
-  .addImageConfirmButton {
-    box-sizing: border-box;
-    background: #fff;
-    border: 1px solid #ddd;
-    padding: 0;
-    color: #888;
-    margin: 0;
-    border-radius: 2.1em;
-    cursor: pointer;
-    height: 2.1em;
-    width: 18%;
-    font-size: 1em;
-    line-height: 2.1em;
-    margin: 0;
-    margin-left: 4%;
-  }
+ 
   
   .addImageConfirmButton:focus {
     outline: 0; /* reset for :focus */

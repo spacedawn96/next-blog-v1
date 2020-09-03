@@ -33,7 +33,7 @@ export default function useCreateComment() {
         proxy.writeQuery({
           query: Get_Comment,
           data: {
-            ...data,
+            ...(data as any),
             comment: [createComment.createComment, ...data.comment],
           },
         });

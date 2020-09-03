@@ -52,14 +52,13 @@ export const item2 = ['write' , 'menu'];
 function TopBanner(props: TopBannerProps) {
   const { data } = useGetUser();
 
-  console.log(data);
   return (
     <TopBannerTap>
       <div className="layout-wrapper">
         <Navbar items={data?.me ? item2 : item} Logo={Logo} color="#fff" />
         {props.datas ? (
           <BarCenter>
-            <Barlog>Dev Posts</Barlog>
+            <Barlog>Dev Post</Barlog>
             <BarPost>{props.datas} ARTICLES</BarPost>
           </BarCenter>
         ) : (

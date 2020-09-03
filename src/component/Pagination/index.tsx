@@ -25,8 +25,8 @@ const PaginationTap = styled.div`
 
 export type PaginationProps = {
   datas: number;
-  postsPerPage: any;
-  setCurrentPage: any;
+  postsPerPage: number;
+  setCurrentPage: (e: number) => void;
 };
 
 function Pagination(props: PaginationProps) {

@@ -32,8 +32,6 @@ import CommentForm from 'src/component/forms/CommentForm';
 import useGetPosts from 'src/hooks/useGetPosts';
 import Buttons from 'src/component/common/Button';
 
-
-
 const PostPageTap = styled.div`
   .post-wrapper {
     width: 40%;
@@ -225,10 +223,11 @@ function PostPage(props: PostPageProps) {
 
   const router = useRouter();
 
+  if (getError) return <p>zzzzzzzzzzz</p>;
   if (loading) return <p>loading</p>;
 
   if (commentsLoading) return <p>Loading...</p>;
-  if (commentsError) return <p>Error !:(</p>;
+  if (commentsError) return <p>Error !!!!!!!!!!:(</p>;
 
   const findData = data.posts.find(ele => ele.id == router.query.slug);
   const staticToolbarPlugin = createToolbarPlugin();
@@ -296,7 +295,7 @@ function PostPage(props: PostPageProps) {
                 </div>
               </Link>
               <Link href="/">
-                <div onClick={() =>DeletePostSubmit(findData.id)}>삭제</div>
+                <div onClick={() => DeletePostSubmit(findData.id)}>삭제</div>
               </Link>
             </div>
           </div>
@@ -367,7 +366,4 @@ function PostPage(props: PostPageProps) {
   );
 }
 
-
-
 export default PostPage;
-

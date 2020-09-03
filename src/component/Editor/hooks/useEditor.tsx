@@ -6,13 +6,7 @@ import {
   UPLOAD_IMAGE_TO_CLOUDINARY,
 } from 'src/graphql/post';
 import { useState } from 'react';
-import {
-  EditorState,
-
-  convertToRaw,
-
-  convertFromRaw,
-} from 'draft-js';
+import { EditorState, convertToRaw, convertFromRaw } from 'draft-js';
 import { useRouter } from 'next/router';
 import { useSelector } from 'react-redux';
 import { RootState } from 'src/store/rootReducer';
@@ -34,10 +28,8 @@ export default function useEditor() {
     entityMap: {},
   };
 
-  const [createPost, ] = useMutation(Create_Post);
-  const [uploadThumbnail] = useMutation(
-    UPLOAD_IMAGE_TO_CLOUDINARY,
-  );
+  const [createPost] = useMutation(Create_Post);
+  const [uploadThumbnail] = useMutation(UPLOAD_IMAGE_TO_CLOUDINARY);
   const [inputs, setInputs] = useState(getPosts.title ? getPosts.title : '');
   const [fileInputState, setFileInputState] = useState('');
   const [previewSource, setPreviewSource] = useState('');
@@ -97,27 +89,29 @@ export default function useEditor() {
         thumbnail: url,
         tags: stringData,
       },
-      update: async (proxy) => {
+
+      update: async (proxy, { data: createPost }) => {
         const data = proxy.readQuery({
           query: GET_Posts,
         });
+
+        console.log(JSON.stringify(convertToRaw(editorState.getCurrentContent())));
 
         const data2 = proxy.readQuery({
           query: Get_TopPost,
         });
 
-        console.log(data2);
         proxy.writeQuery({
           query: Get_TopPost,
           data: {
-            ...data2,
-            topFivePost: [createPost.createPost, ...data2?.topFivePost],
+            ...(data2 as any),
+            topFivePost: [createPost.createPost, ...data2.topFivePost],
           },
         });
         proxy.writeQuery({
           query: GET_Posts,
           data: {
-            ...data,
+            ...(data as any),
             posts: [createPost.createPost, ...data.posts],
           },
         });

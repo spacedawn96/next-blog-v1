@@ -8,10 +8,9 @@ import Pagination from 'src/component/Pagination';
 import Footer from 'src/component/Footer';
 import { GET_Posts, Get_TopPost } from 'src/graphql/post';
 import media from 'src/styles/media';
+import { initializeApollo } from '../lib/apollo';
 import useGetTopPosts from '../hooks/useGetTopPosts';
 import useGetPosts from 'src/hooks/useGetPosts';
-import { initializeApollo } from 'src/lib/apollo';
-
 
 
 const TopBackground = styled.div`

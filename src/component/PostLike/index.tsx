@@ -35,9 +35,9 @@ const PostLikeTap = styled.div<{ isLikeBoolean: boolean }>`
 `;
 
 export type PostLikeProps = {
-  LikehandleSubmit: any;
-  isLikeBoolean: any;
-  UnlikehandleSubmit: any;
+  LikehandleSubmit: (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => void;
+  isLikeBoolean: boolean;
+  UnlikehandleSubmit: (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => void;
 };
 
 function PostLike(props: PostLikeProps) {

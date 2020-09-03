@@ -27,8 +27,8 @@ const Title = styled.div`
 `;
 
 export type CardProps = {
-  children: React.ReactNode;
-  title: string;
+  children?: React.ReactNode;
+  title?: string;
 };
 
 function Card(props: CardProps) {

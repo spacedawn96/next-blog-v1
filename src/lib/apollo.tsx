@@ -7,7 +7,7 @@ function createApolloClient() {
   return new ApolloClient({
     ssrMode: typeof window === 'undefined',
     link: new HttpLink({
-      uri: process.env.NODE_ENV === 'production' ? 'https://blog-server-v1.herokuapp.com/graphql' : 'http://localhost:4000/graphql', // Server URL (must be absolute)
+      uri: process.env.SERVER_URL, // Server URL (must be absolute)  http://localhost:4000/graphql
       credentials: 'include', // Additional fetch() options like `credentials` or `headers`
     }),
     cache: new InMemoryCache({
