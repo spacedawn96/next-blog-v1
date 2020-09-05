@@ -1,17 +1,24 @@
-import { useMutation } from '@apollo/client';
+import { useMutation, useQuery } from '@apollo/client';
 import {
   Create_Post,
   GET_Posts,
   Get_TopPost,
   UPLOAD_IMAGE_TO_CLOUDINARY,
+  Edit_Post,
 } from 'src/graphql/post';
 import { useState } from 'react';
 import { EditorState, convertToRaw, convertFromRaw } from 'draft-js';
-import { useRouter } from 'next/router';
 import { useSelector } from 'react-redux';
 import { RootState } from 'src/store/rootReducer';
+import { useRouter } from 'next/router';
 
 export default function useEditor() {
+  const [editPost, { error }] = useMutation(Edit_Post);
+  const { loading: loadingGetPost, error: errorGetPos, data: dataGetPost } = useQuery(
+    GET_Posts,
+  );
+  const router = useRouter();
+
   const getPosts = useSelector((state: RootState) => state.post.post);
   const initialData = {
     blocks: [
@@ -41,8 +48,6 @@ export default function useEditor() {
       convertFromRaw(getPosts.body ? JSON.parse(getPosts.body) : initialData),
     ),
   );
-
-  const router = useRouter();
 
   const handleFileInputChange = e => {
     const file = e.target.files[0];
@@ -78,6 +83,35 @@ export default function useEditor() {
   const stringData = tag.reduce((result, item) => {
     return `${result}${item.text} `;
   }, '');
+
+  const EditSubmit = async e => {
+    e.preventDefault();
+    editPost({
+      variables: {
+        post_id: router.query.slug.toString(),
+        title: inputs,
+        body: JSON.stringify(convertToRaw(editorState.getCurrentContent())),
+      },
+      update: (proxy, { data: editPost }) => {
+        const data = proxy.readQuery({
+          query: GET_Posts,
+        });
+
+        console.log(data);
+        console.log(editPost);
+
+        const findData = data.posts.find(el => el.id == router.query.slug.toString());
+        proxy.writeQuery({
+          query: GET_Posts,
+          data: {
+            ...data,
+            posts: [findData == editPost.editPost],
+          },
+        });
+      },
+    });
+    router.push(`/blog/${router.query.slug.toString()}`);
+  };
 
   const handleSubmit = async e => {
     e.preventDefault();
@@ -123,6 +157,7 @@ export default function useEditor() {
 
   return {
     handleSubmit,
+    EditSubmit,
     inputs,
     editorState,
     setEditorState,

@@ -19,7 +19,7 @@ import buttonStyle from './button.module.scss';
 import classNames from 'classnames';
 import { BackButton } from 'evergreen-ui';
 import useEditor from './hooks/useEditor';
-
+import { useRouter } from 'next/router';
 import createImagePlugin from 'draft-js-image-plugin';
 import createFocusPlugin from 'draft-js-focus-plugin';
 import createResizeablePlugin from 'draft-js-resizeable-plugin';
@@ -270,8 +270,10 @@ const plugins = [
 export type EditorMainProps = {};
 
 function EditorMain(props: EditorMainProps) {
+  const router = useRouter();
   const {
     handleSubmit,
+    EditSubmit,
     inputs,
     editorState,
     setEditorState,
@@ -380,6 +382,7 @@ function EditorMain(props: EditorMainProps) {
     setTag(newTag);
   };
 
+  console.log(router.query.slug);
   return (
     <>
       <EditorMainTap>
@@ -396,7 +399,11 @@ function EditorMain(props: EditorMainProps) {
                 className="draft-editor-title"
                 placeholder="Title"
               />
-              <button className="post-button" onClick={handleSubmit}>
+              <button
+                className="post-button"
+                onClick={e =>
+                  router.query.slug === undefined ? handleSubmit(e) : EditSubmit(e)
+                }>
                 완료
               </button>
             </Title>

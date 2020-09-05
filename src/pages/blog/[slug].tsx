@@ -22,7 +22,6 @@ import { BsFillHeartFill } from 'react-icons/bs';
 import PostLike from 'src/component/PostLike';
 import usePostLike from 'src/hooks/usePostLike';
 import usePostUnLike from 'src/hooks/usePostUnLike';
-import useEditPost from 'src/hooks/useEditPost';
 import Link from 'next/link';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from 'src/store/rootReducer';
@@ -120,7 +119,7 @@ const PostPageTap = styled.div`
     padding-top: 1rem;
   }
   .subcomments-wrapper {
-    margin-top: 0.4rem;
+    margin: 0.5rem;
     display: flex;
     justify-content: flex-end;
     flex-wrap: nowrap;
@@ -218,7 +217,6 @@ function PostPage(props: PostPageProps) {
   const [on, toggle] = useState(false);
   const { LikehandleSubmit, isLikeBoolean } = usePostLike();
   const { UnlikehandleSubmit, isUnLikeBoolean } = usePostUnLike();
-  const { EditSubmit } = useEditPost();
   const { DeletePostSubmit } = useDeletePost();
 
   const router = useRouter();
@@ -289,13 +287,13 @@ function PostPage(props: PostPageProps) {
           <div className="comments-text-wrapper">
             <div className="comments-count">{getComments.length} 개의 댓글</div>
             <div className="comments-edit">
-              <Link href="/write">
+              <Link href={`/write/${findId}`}>
                 <div onClick={getPostData}>
                   <a>수정</a>
                 </div>
               </Link>
               <Link href="/">
-                <div onClick={() => DeletePostSubmit(findData.id)}>삭제</div>
+                <div onClick={DeletePostSubmit}>삭제</div>
               </Link>
             </div>
           </div>
@@ -353,8 +351,8 @@ function PostPage(props: PostPageProps) {
               {el.replies.map(ele => (
                 <div className="subcomments-wrapper">
                   <SubComments>
-                    {ele.user?.username}
-                    {ele.text}
+                    <div> User {ele.user?.username} </div>
+                    <div> {ele.text}</div>
                   </SubComments>
                 </div>
               ))}

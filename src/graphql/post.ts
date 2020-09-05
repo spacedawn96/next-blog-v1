@@ -166,7 +166,7 @@ export const Edit_Post = gql`
 `;
 
 export const Remove_Post = gql`
-  mutation RemovePost($id: String!) {
-    removePost(id: $id)
+  mutation RemovePost($post_id: String!) {
+    removePost(post_id: $post_id)
   }
 `;

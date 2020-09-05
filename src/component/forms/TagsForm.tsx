@@ -21,7 +21,7 @@ function TagsForm(props: TagsFormProps) {
           type="text"
           value={value}
           onChange={e => setValue(e.target.value)}
-          placeholder="plz Enter after Writing tag"
+          placeholder="Enter after Writing tag"
         />
       </form>
     </>
