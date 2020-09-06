@@ -3,20 +3,20 @@ import { followMutation, getUsersQuery, meQuery } from 'src/graphql/user';
 import { useRouter } from 'next/router';
 import { GET_Posts } from 'src/graphql/post';
 
-
 export default function useFollowUser() {
   const router = useRouter();
   const { data } = useQuery(getUsersQuery);
   const { loading: meGetLoading, error: meGetError, data: meGetData } = useQuery(meQuery);
-  const { loading :loadingGetPost , error :errorGetPos, data :dataGetPost } = useQuery(GET_Posts);
-
+  const { loading: loadingGetPost, error: errorGetPos, data: dataGetPost } = useQuery(
+    GET_Posts,
+  );
 
   const findName = meGetData?.me?.id;
-  const postUserName = dataGetPost?.posts.find(el => el.id == router.query.slug).user.username;
-  const isFollowing = data?.users?.find(el => el.username == postUserName); 
+  const postUserName = dataGetPost?.posts.find(el => el.id == router.query.slug).user
+    .username;
+  const isFollowing = data?.users?.find(el => el.username == postUserName);
 
   const BooleanIsFollowing = Boolean(isFollowing?.follower?.follower_id == findName);
-
 
   const [followUser, { error }] = useMutation(followMutation);
 
@@ -43,9 +43,8 @@ export default function useFollowUser() {
         });
       },
     });
-    return response
-
+    return response;
   };
 
-  return { followHandleSubmit, error ,BooleanIsFollowing  };
+  return { followHandleSubmit, error, BooleanIsFollowing };
 }

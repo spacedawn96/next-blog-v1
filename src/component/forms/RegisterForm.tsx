@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import LabelInput from '../common/LabelInput';
 import Buttons from '../common/Button';
-
+import { useRouter } from 'next/router';
 
 const RegisterFormTap = styled.div`
   width: 20vw;
@@ -10,7 +10,7 @@ const RegisterFormTap = styled.div`
   height: 41vh;
   display: flex;
   align-items: flex-end;
-  .auth-btn{
+  .auth-btn {
     display: flex;
     justify-content: flex-end;
   }

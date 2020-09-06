@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import classNames from 'classnames';
 import card from './card.module.scss';
+import useGetUser from '../TopBanner.tsx/hooks/useGetUser';
 
 const FaceTap = styled.div``;
 
@@ -15,6 +16,7 @@ export type FaceProps = {
 };
 
 function Face(props: FaceProps) {
+  const { data, loading } = useGetUser();
   const dotClass = classNames(`${card.dot} ${card.two}`);
   const eyeClass = classNames(`${card.eye} ${card.right}`);
   const mouthClass = classNames(`${card.mouth} ${card.happy}`);
@@ -59,7 +61,7 @@ function Face(props: FaceProps) {
               <h1 className={card.alert}>Follow me!</h1>
               <div>By {props.username}</div>
             </div>
-            {props.BooleanIsFollowing ? (
+            {props.BooleanIsFollowing && !loading && data.me ? (
               <button className={card.buttonBox} onClick={props.unFollowHandleSubmit}>
                 <h1 className={card.green}>
                   <span>Unfollow</span>

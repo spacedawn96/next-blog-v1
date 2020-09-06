@@ -59,6 +59,7 @@ export type NavbarProps = {
 
 function Navbar(props: NavbarProps) {
   const { logoutButton, loading, data } = useGetUser();
+
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -80,7 +81,7 @@ function Navbar(props: NavbarProps) {
         <List>
           {props.items.map(list => (
             <>
-              <Link href={list} key={list}>
+              <Link href={`/${list}`} key={list}>
                 <ListItem items={list} color={props.color} />
               </Link>
             </>

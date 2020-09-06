@@ -3,6 +3,8 @@ import styled from 'styled-components';
 import Link from 'next/link';
 import LabelInput from '../common/LabelInput';
 import Buttons from '../common/Button';
+import { useRouter } from 'next/router';
+import Router from 'next/router';
 
 const LoginFormTap = styled.div`
   width: 20vw;
@@ -28,6 +30,8 @@ export type LoginFormProps = {
 };
 
 function LoginForm(props: LoginFormProps) {
+  const router = useRouter();
+
   return (
     <LoginFormTap>
       <form onSubmit={props.handleSubmit}>
@@ -55,11 +59,14 @@ function LoginForm(props: LoginFormProps) {
             style={{ marginRight: '1rem' }}>
             Sign In
           </Buttons>
-          <Link href="/register">
-            <Buttons color="blue" size={24} iconBefore="edit">
-              Create Account
-            </Buttons>
-          </Link>
+
+          <Buttons
+            color="blue"
+            size={24}
+            iconBefore="edit"
+            onClick={() => Router.push('/register')}>
+            Create Account
+          </Buttons>
         </div>
       </form>
     </LoginFormTap>

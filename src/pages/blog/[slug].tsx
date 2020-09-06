@@ -17,7 +17,6 @@ import { useQuery, gql, useMutation } from '@apollo/client';
 import { RiArrowDropDownLine } from 'react-icons/ri';
 import useFollowUser from 'src/hooks/useFollowUser';
 import useUnfollowUser from 'src/hooks/useUnfollowUser';
-import useGetUser from 'src/hooks/useGetUser';
 import { BsFillHeartFill } from 'react-icons/bs';
 import PostLike from 'src/component/PostLike';
 import usePostLike from 'src/hooks/usePostLike';
@@ -30,6 +29,7 @@ import useDeletePost from 'src/hooks/useDeletePost';
 import CommentForm from 'src/component/forms/CommentForm';
 import useGetPosts from 'src/hooks/useGetPosts';
 import Buttons from 'src/component/common/Button';
+import { initializeApollo } from 'src/lib/apollo';
 
 const PostPageTap = styled.div`
   .post-wrapper {
@@ -213,7 +213,6 @@ function PostPage(props: PostPageProps) {
   } = useCreateComment();
   const { followHandleSubmit, error, BooleanIsFollowing } = useFollowUser();
   const { unFollowHandleSubmit, unfollowError } = useUnfollowUser();
-  const { userGetData } = useGetUser();
   const [on, toggle] = useState(false);
   const { LikehandleSubmit, isLikeBoolean } = usePostLike();
   const { UnlikehandleSubmit, isUnLikeBoolean } = usePostUnLike();
@@ -292,9 +291,7 @@ function PostPage(props: PostPageProps) {
                   <a>수정</a>
                 </div>
               </Link>
-              <Link href="/">
-                <div onClick={DeletePostSubmit}>삭제</div>
-              </Link>
+              <div onClick={e => DeletePostSubmit(e, findId)}>삭제</div>
             </div>
           </div>
           <CommentForm
