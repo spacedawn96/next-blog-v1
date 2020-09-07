@@ -1,7 +1,6 @@
 # Next js Blog App [Link Demo](http://www.nodegraphqlnext.cf/)
 
-> ## Project Stack
-First, run the development server:
+ ## Project Stack
 - Next js
 - Redux-toolkit
 - ApolloGraphql
