@@ -170,3 +170,17 @@ export const Remove_Post = gql`
     removePost(post_id: $post_id)
   }
 `;
+
+export const Edit_Comment = gql`
+  mutation EditComment($id: String, $text: String) {
+    editComment(id: $id, text: $text) {
+      id
+    }
+  }
+`;
+
+export const Remove_Comment = gql`
+  mutation RemoveComment($id: String!) {
+    removeComment(id: $id)
+  }
+`;

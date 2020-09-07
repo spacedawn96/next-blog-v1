@@ -22,13 +22,20 @@ const postsSlice = createSlice({
     getPostsFailure(state, { payload }: PayloadAction<postsState>) {
       state.error = payload.error;
     },
+    fetchPostInit(state) {
+      state.post = '';
+    },
   },
 });
 
-export const { getPostsSuccess } = postsSlice.actions;
+export const { getPostsSuccess, getPostsFailure, fetchPostInit } = postsSlice.actions;
 
-export const PostInit = (payload): AppThunk => async (dispatch: AppDispatch) => {
+export const PostGet = (payload): AppThunk => async (dispatch: AppDispatch) => {
   dispatch(getPostsSuccess(payload));
+};
+
+export const PostInit = (): AppThunk => async (dispatch: AppDispatch) => {
+  dispatch(fetchPostInit());
 };
 
 export default postsSlice.reducer;

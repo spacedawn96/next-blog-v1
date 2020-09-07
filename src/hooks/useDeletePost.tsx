@@ -17,13 +17,16 @@ export default function useDeletePost() {
           query: GET_Posts,
         });
 
-        const findItem = data?.posts?.filter(el => el.id == findId);
-        const idx = data?.posts?.indexOf(findItem);
+        // const findItem = data?.posts?.filter(el => el.id == findId);
+        // const idx = data?.posts?.indexOf(findItem);
 
+        console.log(data);
+        console.log(router.query.slug);
         proxy.writeQuery({
           query: GET_Posts,
           data: {
-            posts: data.posts.filter(i => i.id !== findId),
+            ...data,
+            posts: [...data.posts.filter(i => i.id !== router.query.slug)],
           },
         });
       },

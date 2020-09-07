@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, useEffect } from 'react';
 import styled from 'styled-components';
 import { RichUtils } from 'draft-js';
 import { convertToHTML } from 'draft-convert';
@@ -26,6 +26,8 @@ import createResizeablePlugin from 'draft-js-resizeable-plugin';
 import createBlockDndPlugin from 'draft-js-drag-n-drop-plugin';
 import Tags from '../Tags';
 import TagsForm from '../forms/TagsForm';
+import { useDispatch, useSelector } from 'react-redux';
+import { PostInit } from 'src/store/post';
 
 const Title = styled.div`
   width: 60%;
@@ -270,6 +272,12 @@ const plugins = [
 export type EditorMainProps = {};
 
 function EditorMain(props: EditorMainProps) {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    return () => {
+      dispatch(PostInit());
+    };
+  }, []);
   const router = useRouter();
   const {
     handleSubmit,
@@ -382,7 +390,6 @@ function EditorMain(props: EditorMainProps) {
     setTag(newTag);
   };
 
-  console.log(router.query.slug);
   return (
     <>
       <EditorMainTap>

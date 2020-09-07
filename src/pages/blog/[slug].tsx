@@ -11,10 +11,6 @@ import Editor from 'draft-js-plugins-editor';
 import useGetComments from '../../hooks/useGetComments';
 import useCreateComment from 'src/hooks/useCreateComment';
 import Face from 'src/component/Face';
-import { IoIosAddCircleOutline } from 'react-icons/io';
-import { Get_SubComment } from 'src/graphql/post';
-import { useQuery, gql, useMutation } from '@apollo/client';
-import { RiArrowDropDownLine } from 'react-icons/ri';
 import useFollowUser from 'src/hooks/useFollowUser';
 import useUnfollowUser from 'src/hooks/useUnfollowUser';
 import { BsFillHeartFill } from 'react-icons/bs';
@@ -24,12 +20,14 @@ import usePostUnLike from 'src/hooks/usePostUnLike';
 import Link from 'next/link';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from 'src/store/rootReducer';
-import { PostInit } from 'src/store/post';
+import { PostGet } from 'src/store/post';
 import useDeletePost from 'src/hooks/useDeletePost';
 import CommentForm from 'src/component/forms/CommentForm';
 import useGetPosts from 'src/hooks/useGetPosts';
-import Buttons from 'src/component/common/Button';
 import { initializeApollo } from 'src/lib/apollo';
+import CommentsItem from 'src/component/forms/CommentsItem';
+import useDeleteComment from 'src/hooks/useDeleteComment';
+import useEditComment from 'src/hooks/useEditComment';
 
 const PostPageTap = styled.div`
   .post-wrapper {
@@ -75,6 +73,43 @@ const PostPageTap = styled.div`
     margin: 0 auto;
     padding: 6rem;
   }
+
+  .comments-text-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .comments-edit {
+    display: flex;
+    & div {
+      margin-right: 1rem;
+    }
+  }
+
+  .comments-layout {
+    text-align: left;
+    color: rgb(52, 58, 64);
+    margin: auto;
+    padding: 1rem;
+    outline: none;
+    border-width: 1px;
+    border-style: solid;
+    border-color: rgb(233, 236, 239);
+    border-image: initial;
+    border-radius: 4px;
+  }
+  .comments-text {
+    padding-top: 1rem;
+  }
+
+  .comment-write-button {
+    color: rgb(134, 142, 150);
+    display: flex;
+    align-items: center;
+    padding-top: 1rem;
+  }
+
   .commentsInput {
     margin-bottom: 1.5rem;
     width: 95%;
@@ -89,52 +124,12 @@ const PostPageTap = styled.div`
     border-image: initial;
     border-radius: 4px;
   }
-  .comments-layout {
-    text-align: left;
-    color: rgb(52, 58, 64);
-    margin: auto;
-    padding: 1rem;
-    outline: none;
-    border-width: 1px;
-    border-style: solid;
-    border-color: rgb(233, 236, 239);
-    border-image: initial;
-    border-radius: 4px;
-  }
 
   .button-flex {
     display: flex;
     justify-content: flex-end;
     width: 100%;
     margin-bottom: 1rem;
-  }
-
-  .comments-text {
-    padding-top: 1rem;
-  }
-  .comment-write-button {
-    color: rgb(134, 142, 150);
-    display: flex;
-    align-items: center;
-    padding-top: 1rem;
-  }
-  .subcomments-wrapper {
-    margin: 0.5rem;
-    display: flex;
-    justify-content: flex-end;
-    flex-wrap: nowrap;
-  }
-  .comments-text-wrapper {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-
-  .comments-edit {
-    display: flex;
-    & div {
-      margin-right: 1rem;
-    }
   }
 `;
 const Title = styled.div`
@@ -150,18 +145,6 @@ const Title = styled.div`
   margin-block-end: 0.83em;
 `;
 
-const SubComments = styled.div`
-  width: 90%;
-  font-size: 1rem;
-  color: rgb(33, 37, 41);
-  line-height: 1.75;
-  padding: 1rem 1rem 1.5rem;
-  outline: none;
-  border: 1px solid rgb(33, 37, 41);
-  border-color: rgb(233, 236, 239);
-  border-image: initial;
-  border-radius: 4px;
-`;
 const styleMap = {
   CODE: {
     backgroundColor: 'rgba(0, 0, 0, 0.05)',
@@ -198,6 +181,7 @@ export type PostPageProps = {};
 
 function PostPage(props: PostPageProps) {
   const dispatch = useDispatch();
+  const [isInput, setisInput] = useState(false);
   const post = useSelector((state: RootState) => state.post);
   const { loading, error: getError, data } = useGetPosts();
   const { commentsLoading, commentsError, commentstData } = useGetComments();
@@ -217,6 +201,8 @@ function PostPage(props: PostPageProps) {
   const { LikehandleSubmit, isLikeBoolean } = usePostLike();
   const { UnlikehandleSubmit, isUnLikeBoolean } = usePostUnLike();
   const { DeletePostSubmit } = useDeletePost();
+  const { EditCommentSubmit } = useEditComment();
+  const { DeleteCommentSubmit } = useDeleteComment();
 
   const router = useRouter();
 
@@ -244,8 +230,10 @@ function PostPage(props: PostPageProps) {
   const findId = findData.id;
 
   const getPostData = () => {
-    dispatch(PostInit(findData));
+    dispatch(PostGet(findData));
   };
+
+  console.log(getComments);
 
   return (
     <>
@@ -300,60 +288,25 @@ function PostPage(props: PostPageProps) {
             getText={getText}
             textOnChange={textOnChange}
           />
-          {getComments.map(el => (
-            <>
-              {el.reply ? (
-                ''
-              ) : (
-                <>
-                  <div className="comments-layout" key={el.id}>
-                    <div>User {el.user?.username}</div>
-                    <div className="comments-text">{el.text}</div>
-                    <div
-                      onClick={() => {
-                        setIsopen(el.id);
-                        toggle(!on);
-                      }}>
-                      <div className="comment-write-button">
-                        <IoIosAddCircleOutline /> 댓글 작성
-                      </div>
-                    </div>
-                  </div>
-                  <RiArrowDropDownLine />
-                </>
-              )}
-
-              {el.id == isOpen && on ? (
-                <>
-                  <form onSubmit={e => subHandleSubmit(e, findData.id)}>
-                    <input
-                      className="commentsInput"
-                      placeholder="댓글을 입력하세요"
-                      name="text"
-                      value={getSubText}
-                      type="text"
-                      onChange={subTextOnChange}
-                    />
-                    <div className="button-flex">
-                      <Buttons color="blue" size={24} iconBefore="edit">
-                        댓글 작성
-                      </Buttons>
-                    </div>
-                  </form>
-                </>
-              ) : (
-                ''
-              )}
-
-              {el.replies.map(ele => (
-                <div className="subcomments-wrapper">
-                  <SubComments>
-                    <div> User {ele.user?.username} </div>
-                    <div> {ele.text}</div>
-                  </SubComments>
-                </div>
-              ))}
-            </>
+          {getComments.map((el, id) => (
+            <div key={id}>
+              <CommentsItem
+                el={el}
+                isInput={isInput}
+                getSubText={getSubText}
+                subTextOnChange={subTextOnChange}
+                setIsopen={setIsopen}
+                toggle={toggle}
+                on={on}
+                isOpen={isOpen}
+                subHandleSubmit={subHandleSubmit}
+                findData={findData}
+                EditCommentSubmit={EditCommentSubmit}
+                findId={findId}
+                setisInput={setisInput}
+                DeleteCommentSubmit={DeleteCommentSubmit}
+              />
+            </div>
           ))}
         </div>
       </PostPageTap>

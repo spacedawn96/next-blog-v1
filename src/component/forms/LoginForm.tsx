@@ -60,11 +60,7 @@ function LoginForm(props: LoginFormProps) {
             Sign In
           </Buttons>
 
-          <Buttons
-            color="blue"
-            size={24}
-            iconBefore="edit"
-            onClick={() => Router.push('/register')}>
+          <Buttons color="blue" size={24} iconBefore="edit">
             Create Account
           </Buttons>
         </div>
