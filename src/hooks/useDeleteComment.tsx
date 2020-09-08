@@ -7,7 +7,6 @@ export default function useDeleteComment() {
   const DeleteCommentSubmit = async (e, commentId) => {
     e.preventDefault();
 
-    console.log(commentId);
     deleteComment({
       variables: {
         id: commentId,
@@ -16,6 +15,11 @@ export default function useDeleteComment() {
         const data = proxy.readQuery({
           query: Get_Comment,
         });
+
+        const findData = data.comment.find(el => el.id == commentId);
+        const findIndex = data.comment.indexOf(findData);
+
+        console.log(commentId);
 
         console.log(data);
 

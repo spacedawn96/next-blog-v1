@@ -23,10 +23,9 @@ const CommentsItemTap = styled.div`
   }
 
   .comment-write-button {
-    color: rgb(134, 142, 150);
     display: flex;
-    align-items: center;
-    padding-top: 1rem;
+    justify-content: space-between;
+    color: rgb(134, 142, 150);
   }
 
   .commentsInput {
@@ -66,6 +65,12 @@ const CommentsItemTap = styled.div`
       margin-right: 0.4rem;
     }
   }
+  .edit-button {
+    display: flex;
+    & div {
+      margin-right: 0.4rem;
+    }
+  }
 `;
 const SubComments = styled.div`
   width: 90%;
@@ -78,10 +83,15 @@ const SubComments = styled.div`
   border-color: rgb(233, 236, 239);
   border-image: initial;
   border-radius: 4px;
+
+  .sub-color {
+    color: rgb(134, 142, 150);
+  }
 `;
 
 export type CommentsItemProps = {
   el: any;
+  ele: any;
   isInput: boolean;
   getSubText: string;
   subTextOnChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
@@ -106,19 +116,29 @@ export type CommentsItemProps = {
 
 function CommentsItem(props: CommentsItemProps) {
   const [editComment, setEditComment] = useState(false);
+  const [editSubComment, setEditSubComment] = useState(false);
   const [editText, setEditText] = useState('');
+  const [subEditText, subSetEditText] = useState('');
 
   const editCommentInput = e => {
     setEditText(e.target.value);
+  };
+
+  const editSubCommentInput = e => {
+    subSetEditText(e.target.value);
   };
 
   const fixComment = () => {
     setEditComment(!editComment);
   };
 
+  const fixSubComment = () => {
+    setEditSubComment(!editSubComment);
+  };
+
   return (
     <CommentsItemTap>
-      {props.el.reply ? (
+      {props.ele.reply ? (
         ''
       ) : (
         <>
@@ -136,39 +156,52 @@ function CommentsItem(props: CommentsItemProps) {
                 props.el.text
               )}
             </div>
+
             <div className="comment-write-button">
-              <div
-                onClick={() => {
-                  props.setIsopen(props.el.id);
-                  props.toggle(!props.on);
-                }}>
-                <IoIosAddCircleOutline /> 댓글 작성
+              <div className="edit-button">
+                <IoIosAddCircleOutline
+                  onClick={() => {
+                    props.setIsopen(props.el.id);
+                    props.toggle(!props.on);
+                  }}
+                />
+                <div
+                  onClick={() => {
+                    props.setIsopen(props.el.id);
+                    props.toggle(!props.on);
+                  }}>
+                  댓글 작성
+                </div>
               </div>
-              {editComment ? (
-                <div>
-                  <div
-                    onClick={e => {
-                      props.EditCommentSubmit(e, props.el.id, editText);
-                      fixComment();
-                    }}>
-                    수정!
+
+              <div className="edit-button">
+                {editComment ? (
+                  <>
+                    <div
+                      onClick={e => {
+                        props.EditCommentSubmit(e, props.el.id, editText);
+                        fixComment();
+                      }}>
+                      수정
+                    </div>
+                    <div>취소</div>
+                  </>
+                ) : (
+                  <div className="edit-button">
+                    <div
+                      onClick={() => {
+                        fixComment();
+                      }}>
+                      수정
+                    </div>
+                    <div onClick={e => props.DeleteCommentSubmit(e, props.el.id)}>
+                      삭제
+                    </div>
                   </div>
-                  <div>취소</div>
-                </div>
-              ) : (
-                <div>
-                  <div
-                    onClick={() => {
-                      fixComment();
-                    }}>
-                    수정
-                  </div>
-                  <div onClick={e => props.DeleteCommentSubmit(e, props.el.id)}>삭제</div>
-                </div>
-              )}
+                )}
+              </div>
             </div>
           </div>
-
           <RiArrowDropDownLine />
         </>
       )}
@@ -194,24 +227,52 @@ function CommentsItem(props: CommentsItemProps) {
       ) : (
         ''
       )}
-
-      {props.el.replies.map(ele => (
-        <div className="subcomments-wrapper">
-          <SubComments>
-            <div> User {ele.user?.username} </div>
-            <div> {ele.text}</div>
-            <div className="comments-edit-wrapper">
-              <div
-                onClick={e => props.EditCommentSubmit(e, props.findId, props.getSubText)}>
-                수정
-              </div>
-              <div>삭제</div>
-            </div>
-          </SubComments>
-        </div>
-      ))}
     </CommentsItemTap>
   );
 }
 
 export default CommentsItem;
+// {props.el.reply ? (
+//   <div className="subcomments-wrapper">
+//     <SubComments>
+//       <div> User {props.el.user?.username} </div>
+//       {editSubComment ? (
+//         <>
+//           <input
+//             name="text"
+//             value={subEditText}
+//             onChange={editSubCommentInput}
+//             type="text"
+//           />
+//           <div className="comments-edit-wrapper">
+//             <div
+//               onClick={e => {
+//                 props.EditCommentSubmit(e, props.el.id, subEditText);
+//                 fixSubComment();
+//               }}
+//               className="sub-color">
+//               수정
+//             </div>
+//             <div className="sub-color">취소</div>
+//           </div>
+//         </>
+//       ) : (
+//         <>
+//           {props.el.text}
+//           <div className="comments-edit-wrapper">
+//             <div onClick={fixSubComment} className="sub-color">
+//               수정
+//             </div>
+//             <div
+//               className="sub-color"
+//               onClick={e => props.DeleteCommentSubmit(e, props.el.id)}>
+//               삭제
+//             </div>
+//           </div>
+//         </>
+//       )}
+//     </SubComments>
+//   </div>
+// ) : (
+//   ''
+// )}

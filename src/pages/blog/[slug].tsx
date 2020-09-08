@@ -29,6 +29,10 @@ import CommentsItem from 'src/component/forms/CommentsItem';
 import useDeleteComment from 'src/hooks/useDeleteComment';
 import useEditComment from 'src/hooks/useEditComment';
 
+import Buttons from 'src/component/common/Button';
+import Comments from 'src/component/Comments/Comments';
+import SubComments from 'src/component/Comments/SubComments';
+
 const PostPageTap = styled.div`
   .post-wrapper {
     width: 40%;
@@ -104,10 +108,9 @@ const PostPageTap = styled.div`
   }
 
   .comment-write-button {
-    color: rgb(134, 142, 150);
     display: flex;
-    align-items: center;
-    padding-top: 1rem;
+    justify-content: space-between;
+    color: rgb(134, 142, 150);
   }
 
   .commentsInput {
@@ -130,6 +133,28 @@ const PostPageTap = styled.div`
     justify-content: flex-end;
     width: 100%;
     margin-bottom: 1rem;
+  }
+
+  .subcomments-wrapper {
+    margin: 0.5rem;
+    display: flex;
+    justify-content: flex-end;
+    flex-wrap: nowrap;
+  }
+
+  .comments-edit-wrapper {
+    display: flex;
+    justify-content: flex-end;
+
+    & div {
+      margin-right: 0.4rem;
+    }
+  }
+  .edit-button {
+    display: flex;
+    & div {
+      margin-right: 0.4rem;
+    }
   }
 `;
 const Title = styled.div`
@@ -203,6 +228,10 @@ function PostPage(props: PostPageProps) {
   const { DeletePostSubmit } = useDeletePost();
   const { EditCommentSubmit } = useEditComment();
   const { DeleteCommentSubmit } = useDeleteComment();
+  const [editComment, setEditComment] = useState(false);
+
+  const [editText, setEditText] = useState('');
+  const [subEditText, subSetEditText] = useState('');
 
   const router = useRouter();
 
@@ -233,7 +262,17 @@ function PostPage(props: PostPageProps) {
     dispatch(PostGet(findData));
   };
 
-  console.log(getComments);
+  const editCommentInput = e => {
+    setEditText(e.target.value);
+  };
+
+  const editSubCommentInput = e => {
+    subSetEditText(e.target.value);
+  };
+
+  const fixComment = () => {
+    setEditComment(!editComment);
+  };
 
   return (
     <>
@@ -288,10 +327,11 @@ function PostPage(props: PostPageProps) {
             getText={getText}
             textOnChange={textOnChange}
           />
-          {getComments.map((el, id) => (
+          {/* {getComments.map((el, id) => (
             <div key={id}>
               <CommentsItem
                 el={el}
+                ele={el}
                 isInput={isInput}
                 getSubText={getSubText}
                 subTextOnChange={subTextOnChange}
@@ -307,6 +347,59 @@ function PostPage(props: PostPageProps) {
                 DeleteCommentSubmit={DeleteCommentSubmit}
               />
             </div>
+          ))} */}
+
+          {getComments.map((el, id) => (
+            <>
+              <div key={id}>
+                <Comments
+                  el={el}
+                  editComment={editComment}
+                  editText={editText}
+                  editCommentInput={editCommentInput}
+                  toggle={toggle}
+                  on={on}
+                  EditCommentSubmit={EditCommentSubmit}
+                  fixComment={fixComment}
+                  DeleteCommentSubmit={DeleteCommentSubmit}
+                  setIsopen={setIsopen}
+                />
+              </div>
+
+              {el.id == isOpen && on ? (
+                <>
+                  <form onSubmit={e => subHandleSubmit(e, findData.id)}>
+                    <input
+                      className="commentsInput"
+                      placeholder="댓글을 입력하세요"
+                      name="text"
+                      value={getSubText}
+                      type="text"
+                      onChange={subTextOnChange}
+                    />
+                    <div className="button-flex">
+                      <Buttons color="blue" size={24} iconBefore="edit">
+                        댓글 작성
+                      </Buttons>
+                    </div>
+                  </form>
+                </>
+              ) : (
+                ''
+              )}
+              {getComments.map((ele, id) => (
+                <>
+                  <SubComments
+                    ele={ele}
+                    el={el}
+                    subEditText={subEditText}
+                    editSubCommentInput={editSubCommentInput}
+                    EditCommentSubmit={EditCommentSubmit}
+                    DeleteCommentSubmit={DeleteCommentSubmit}
+                  />
+                </>
+              ))}
+            </>
           ))}
         </div>
       </PostPageTap>

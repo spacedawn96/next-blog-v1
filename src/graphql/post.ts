@@ -175,6 +175,7 @@ export const Edit_Comment = gql`
   mutation EditComment($id: String, $text: String) {
     editComment(id: $id, text: $text) {
       id
+      text
     }
   }
 `;

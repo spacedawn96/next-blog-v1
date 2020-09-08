@@ -30,6 +30,8 @@ export default function useCreateComment() {
           query: Get_Comment,
         });
 
+        console.log(data);
+
         proxy.writeQuery({
           query: Get_Comment,
           data: {
