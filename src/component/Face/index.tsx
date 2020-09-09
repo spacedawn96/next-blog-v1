@@ -39,7 +39,11 @@ function Face(props: FaceProps) {
             <div className={moveClass} />
             <div className={card.message}>
               <h1 className={card.alert}>Error!</h1>
-              <p>oh no, something went wrong.</p>
+              <p>
+                {props.error?.graphQLErrors.map(({ message }, i) => (
+                  <span key={i}>{message}</span>
+                ))}
+              </p>
             </div>
             <button className={card.buttonBox}>
               <h1 className={card.red}>try again</h1>

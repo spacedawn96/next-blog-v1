@@ -5,6 +5,7 @@ import { EditorState, convertFromRaw } from 'draft-js';
 import createToolbarPlugin from 'draft-js-static-toolbar-plugin';
 import TopBanner from 'src/component/TopBanner.tsx';
 import { capitalize } from 'src/utils/capitalize';
+import { escape } from 'src/utils/checkString';
 import moment from 'moment';
 import createLinkDecorator from 'src/component/Editor/Decorators';
 import Editor from 'draft-js-plugins-editor';
@@ -28,7 +29,6 @@ import { initializeApollo } from 'src/lib/apollo';
 import CommentsItem from 'src/component/forms/CommentsItem';
 import useDeleteComment from 'src/hooks/useDeleteComment';
 import useEditComment from 'src/hooks/useEditComment';
-
 import Buttons from 'src/component/common/Button';
 import Comments from 'src/component/Comments/Comments';
 import SubComments from 'src/component/Comments/SubComments';
@@ -155,6 +155,22 @@ const PostPageTap = styled.div`
     & div {
       margin-right: 0.4rem;
     }
+  }
+  .tag {
+    margin-bottom: 0.875rem;
+    background: rgb(241, 243, 245);
+    padding-left: 1rem;
+    padding-right: 1rem;
+    height: 2rem;
+    border-radius: 1rem;
+    display: inline-flex;
+    -webkit-box-align: center;
+    align-items: center;
+    margin-right: 0.875rem;
+    color: rgb(12, 166, 120);
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 1rem;
   }
 `;
 const Title = styled.div`
@@ -301,7 +317,11 @@ function PostPage(props: PostPageProps) {
         </div>
         <div className="post-wrapper">
           <Title> {capitalize(findData.title)}</Title>
-          <div className="tag">{findData.tag}</div>
+          {findData.tags?.name ? (
+            <div className="tag"> {escape(findData.tags.name)} </div>
+          ) : (
+            ''
+          )}
           <div className="dataFormat">
             {moment(findData.created_at).format('MMMM Do YYYY, h:mm:ss a')}
           </div>

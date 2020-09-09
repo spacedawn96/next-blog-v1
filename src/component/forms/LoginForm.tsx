@@ -5,6 +5,7 @@ import LabelInput from '../common/LabelInput';
 import Buttons from '../common/Button';
 import { useRouter } from 'next/router';
 import Router from 'next/router';
+import { ApolloError } from '@apollo/client';
 
 const LoginFormTap = styled.div`
   width: 20vw;
@@ -27,6 +28,7 @@ export type LoginFormProps = {
   inputs: inputArray;
   handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   handleSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
+  loginError: ApolloError;
 };
 
 function LoginForm(props: LoginFormProps) {
@@ -51,6 +53,11 @@ function LoginForm(props: LoginFormProps) {
           value={props.inputs.password}
           onChange={props.handleChange}
         />
+        <p>
+          {props.loginError?.graphQLErrors.map(({ message }, i) => (
+            <span key={i}>{message}</span>
+          ))}
+        </p>
         <div className="button-wrapper">
           <Buttons
             color="blue"

@@ -14,7 +14,7 @@ const LoginTap = styled.div`
 export type LoginProps = {};
 
 function Login(props: LoginProps) {
-  const { inputs, handleChange, handleSubmit } = useLogin();
+  const { inputs, handleChange, handleSubmit, loginError } = useLogin();
 
   return (
     <>
@@ -25,6 +25,7 @@ function Login(props: LoginProps) {
             inputs={inputs}
             handleChange={handleChange}
             handleSubmit={handleSubmit}
+            loginError={loginError}
           />
         </Card>
       </LoginTap>

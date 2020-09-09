@@ -1,6 +1,8 @@
 import React, { useRef } from 'react';
 import styled from 'styled-components';
 import styles from './index.module.scss';
+import { toast, ToastContainer } from 'react-nextjs-toast';
+import useGetUser from '../TopBanner.tsx/hooks/useGetUser';
 
 const PostLikeTap = styled.div<{ isLikeBoolean: boolean }>`
   .heart {
@@ -42,39 +44,77 @@ export type PostLikeProps = {
 
 function PostLike(props: PostLikeProps) {
   const containerRef = useRef(null);
+  const { data, loading } = useGetUser();
+  const onClickNotify = () => {
+    toast.notify(`로그인이 필요합니다`, {
+      duration: 2,
+      type: 'error',
+    });
+  };
 
   return (
-    <PostLikeTap isLikeBoolean={props.isLikeBoolean}>
-      {props.isLikeBoolean ? (
-        <div onClick={props.UnlikehandleSubmit}>
-          <a style={{ color: '#000' }} />
-          <script src="https://codepen.io/shshaw/pen/QmZYMG.js" />
+    <>
+      {!loading && data.me ? (
+        <>
+          <PostLikeTap isLikeBoolean={props.isLikeBoolean}>
+            {props.isLikeBoolean ? (
+              <div onClick={props.UnlikehandleSubmit}>
+                <a style={{ color: '#000' }} />
+                <script src="https://codepen.io/shshaw/pen/QmZYMG.js" />
 
-          <button className={styles.likebutton}>
-            <div className={styles.likewrapper}>
-              <div className={styles.ripple} />
-              <svg className="heart" width="24" height="24" viewBox="0 0 24 24">
-                <path d="M12,21.35L10.55,20.03C5.4,15.36 2,12.27 2,8.5C2,5.41 4.42,3 7.5,3C9.24,3 10.91,3.81 12,5.08C13.09,3.81 14.76,3 16.5,3C19.58,3 22,5.41 22,8.5C22,12.27 18.6,15.36 13.45,20.03L12,21.35Z" />
-              </svg>
-            </div>
-          </button>
-        </div>
+                <button className={styles.likebutton}>
+                  <div className={styles.likewrapper}>
+                    <div className={styles.ripple} />
+                    <svg className="heart" width="24" height="24" viewBox="0 0 24 24">
+                      <path d="M12,21.35L10.55,20.03C5.4,15.36 2,12.27 2,8.5C2,5.41 4.42,3 7.5,3C9.24,3 10.91,3.81 12,5.08C13.09,3.81 14.76,3 16.5,3C19.58,3 22,5.41 22,8.5C22,12.27 18.6,15.36 13.45,20.03L12,21.35Z" />
+                    </svg>
+                  </div>
+                </button>
+              </div>
+            ) : (
+              <div
+                onClick={e => {
+                  props.LikehandleSubmit(e);
+                }}>
+                <a style={{ color: '#000' }} />
+                <script src="https://codepen.io/shshaw/pen/QmZYMG.js" />
+
+                <button className={styles.likebutton}>
+                  <div className={styles.likewrapper}>
+                    <div className={styles.ripple} />
+                    <svg className="heart" width="24" height="24" viewBox="0 0 24 24">
+                      <path d="M12,21.35L10.55,20.03C5.4,15.36 2,12.27 2,8.5C2,5.41 4.42,3 7.5,3C9.24,3 10.91,3.81 12,5.08C13.09,3.81 14.76,3 16.5,3C19.58,3 22,5.41 22,8.5C22,12.27 18.6,15.36 13.45,20.03L12,21.35Z" />
+                    </svg>
+                  </div>
+                </button>
+              </div>
+            )}
+          </PostLikeTap>
+        </>
       ) : (
-        <div onClick={props.LikehandleSubmit}>
-          <a style={{ color: '#000' }} />
-          <script src="https://codepen.io/shshaw/pen/QmZYMG.js" />
+        <>
+          <ToastContainer align={'left'} />
+          <PostLikeTap isLikeBoolean={props.isLikeBoolean}>
+            <div
+              onClick={e => {
+                onClickNotify();
+              }}>
+              <a style={{ color: '#000' }} />
+              <script src="https://codepen.io/shshaw/pen/QmZYMG.js" />
 
-          <button className={styles.likebutton}>
-            <div className={styles.likewrapper}>
-              <div className={styles.ripple} />
-              <svg className="heart" width="24" height="24" viewBox="0 0 24 24">
-                <path d="M12,21.35L10.55,20.03C5.4,15.36 2,12.27 2,8.5C2,5.41 4.42,3 7.5,3C9.24,3 10.91,3.81 12,5.08C13.09,3.81 14.76,3 16.5,3C19.58,3 22,5.41 22,8.5C22,12.27 18.6,15.36 13.45,20.03L12,21.35Z" />
-              </svg>
+              <button className={styles.likebutton}>
+                <div className={styles.likewrapper}>
+                  <div className={styles.ripple} />
+                  <svg className="heart" width="24" height="24" viewBox="0 0 24 24">
+                    <path d="M12,21.35L10.55,20.03C5.4,15.36 2,12.27 2,8.5C2,5.41 4.42,3 7.5,3C9.24,3 10.91,3.81 12,5.08C13.09,3.81 14.76,3 16.5,3C19.58,3 22,5.41 22,8.5C22,12.27 18.6,15.36 13.45,20.03L12,21.35Z" />
+                  </svg>
+                </div>
+              </button>
             </div>
-          </button>
-        </div>
+          </PostLikeTap>
+        </>
       )}
-    </PostLikeTap>
+    </>
   );
 }
 

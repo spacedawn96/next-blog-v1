@@ -70,10 +70,11 @@ $font: 'Lato', sans-serif;
   position: absolute;
   width: 35%;
   height: 100%;
-  right: 12%;
   background: linear-gradient(to bottom left, $error 40%, $orange 100%);
   border-radius: 20px;
   box-shadow: 5px 5px 20px rgba($gray, 10%);
+  perspective: 40px;
+  left: 50%;
 }
 
 .dot {

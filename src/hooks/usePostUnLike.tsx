@@ -9,11 +9,11 @@ export default function usePostUnLike() {
   );
   const router = useRouter();
 
-  console.log(dataGetPost)
+  console.log(dataGetPost);
   const isUnLikeBoolean = dataGetPost?.posts.find(el => el.id == router.query.slug).liked;
 
   const UnlikehandleSubmit = async () => {
-      UnpostLike({
+    UnpostLike({
       variables: {
         id: router.query.slug,
       },
@@ -22,9 +22,7 @@ export default function usePostUnLike() {
           query: GET_Posts,
         });
         const findPost = data.posts.find(el => el.id == router.query.slug);
-        console.log(findPost);
-        console.log(UnpostLike);
-        
+
         proxy.writeQuery({
           query: GET_Posts,
           data: {
@@ -36,5 +34,5 @@ export default function usePostUnLike() {
     });
   };
 
-  return { UnlikehandleSubmit ,isUnLikeBoolean};
+  return { UnlikehandleSubmit, isUnLikeBoolean };
 }

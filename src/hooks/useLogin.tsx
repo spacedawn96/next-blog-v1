@@ -12,7 +12,11 @@ export default function useLogin() {
   });
 
   const router = useRouter();
-  const [login] = useMutation(loginMutation);
+  const [login, { error: loginError }] = useMutation(loginMutation, {
+    onCompleted({ login }) {
+      router.push('/');
+    },
+  });
 
   const handleSubmit = async e => {
     e.preventDefault();
@@ -35,9 +39,7 @@ export default function useLogin() {
     if (response.data) {
       setAccessToken(response.data.login.accessToken);
     }
-
-    router.push('/');
   };
 
-  return { inputs, handleChange, handleSubmit };
+  return { inputs, handleChange, handleSubmit, loginError };
 }

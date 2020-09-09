@@ -19,7 +19,7 @@ const RegisterTap = styled.div`
 export type RegisterProps = {};
 
 function Register(props: RegisterProps) {
-  const { inputs, handleChange, handleSubmit } = useRegister();
+  const { inputs, handleChange, handleSubmit, registerError } = useRegister();
 
   return (
     <>
@@ -30,6 +30,7 @@ function Register(props: RegisterProps) {
             inputs={inputs}
             handleChange={handleChange}
             handleSubmit={handleSubmit}
+            registerError={registerError}
           />
         </Card>
       </RegisterTap>

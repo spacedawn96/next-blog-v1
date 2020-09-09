@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import LabelInput from '../common/LabelInput';
 import Buttons from '../common/Button';
 import { useRouter } from 'next/router';
+import { ApolloError } from '@apollo/client';
 
 const RegisterFormTap = styled.div`
   width: 20vw;
@@ -26,6 +27,7 @@ export type RegisterFormProps = {
   inputs: inputArray;
   handleChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   handleSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
+  registerError: ApolloError;
 };
 
 function RegisterForm(props: RegisterFormProps) {
@@ -56,6 +58,11 @@ function RegisterForm(props: RegisterFormProps) {
           value={props.inputs?.password}
           onChange={props.handleChange}
         />
+        <p>
+          {props.registerError?.graphQLErrors.map(({ message }, i) => (
+            <span key={i}>{message}</span>
+          ))}
+        </p>
         <div className="auth-btn">
           <Buttons color="blue" size={24} iconAfter="arrow-right">
             Sign Up

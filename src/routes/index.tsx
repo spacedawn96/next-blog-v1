@@ -12,7 +12,6 @@ import { initializeApollo } from '../lib/apollo';
 import useGetTopPosts from '../hooks/useGetTopPosts';
 import useGetPosts from 'src/hooks/useGetPosts';
 
-
 const TopBackground = styled.div`
   background: #f7f9fd;
   display: flex;
@@ -65,7 +64,7 @@ function IndexPage(props: HomePageProps) {
   const [currentPage, setCurrentPage] = useState(1);
   const [postsPerPage] = useState(24);
   const { loading, error, data } = useGetPosts();
-  const {TopPostData,topPostLoading, topPostError} = useGetTopPosts();
+  const { TopPostData, topPostLoading, topPostError } = useGetTopPosts();
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error :!(</p>;
 
@@ -97,7 +96,7 @@ function IndexPage(props: HomePageProps) {
         <MainTitle>Latest Articles</MainTitle>
       </div>
       <MainContent>
-        {TopPostData?.topFivePost.map(ele => (
+        {data?.posts.map(ele => (
           <>
             <MainCard>
               <PostCard large={true} isBig={true} {...ele} key={ele.id} />
