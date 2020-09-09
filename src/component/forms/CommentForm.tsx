@@ -19,12 +19,19 @@ export type CommentFormProps = {
   getText: string;
   textOnChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   findId: React.FormEvent<HTMLFormElement>;
+  userData;
+  onClickNotify;
 };
 
 function CommentForm(props: CommentFormProps) {
   return (
     <CommentFormTap>
-      <form onSubmit={e => props.handleSubmit(e, props.findId)}>
+      <form
+        onSubmit={e => {
+          props.userData.me
+            ? props.handleSubmit(e, props.findId)
+            : props.onClickNotify(e);
+        }}>
         <input
           className="commentsInput"
           placeholder="댓글을 입력하세요"

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import { IoIosAddCircleOutline } from 'react-icons/io';
 import { RiArrowDropDownLine } from 'react-icons/ri';
+import useGetUser from '../TopBanner.tsx/hooks/useGetUser';
 
 const CommentsTap = styled.div``;
 
@@ -16,6 +17,7 @@ export type CommentsProps = {
   EditCommentSubmit;
   fixComment;
   DeleteCommentSubmit;
+  userData;
 };
 
 function Comments(props: CommentsProps) {
@@ -40,6 +42,7 @@ function Comments(props: CommentsProps) {
     setEditSubComment(!editSubComment);
   };
 
+  console.log(props.el.user.id);
   return (
     <>
       {props.el.reply ? (
@@ -78,32 +81,36 @@ function Comments(props: CommentsProps) {
                 </div>
               </div>
 
-              <div className="edit-button">
-                {editComment ? (
-                  <>
-                    <div
-                      onClick={e => {
-                        props.EditCommentSubmit(e, props.el.id, props.editText);
-                        fixComment();
-                      }}>
-                      수정
+              {props.userData?.me?.id == props.el.user.id ? (
+                <div className="edit-button">
+                  {editComment ? (
+                    <>
+                      <div
+                        onClick={e => {
+                          props.EditCommentSubmit(e, props.el.id, props.editText);
+                          fixComment();
+                        }}>
+                        수정
+                      </div>
+                      <div>취소</div>
+                    </>
+                  ) : (
+                    <div className="edit-button">
+                      <div
+                        onClick={() => {
+                          fixComment();
+                        }}>
+                        수정
+                      </div>
+                      <div onClick={e => props.DeleteCommentSubmit(e, props.el.id)}>
+                        삭제
+                      </div>
                     </div>
-                    <div>취소</div>
-                  </>
-                ) : (
-                  <div className="edit-button">
-                    <div
-                      onClick={() => {
-                        fixComment();
-                      }}>
-                      수정
-                    </div>
-                    <div onClick={e => props.DeleteCommentSubmit(e, props.el.id)}>
-                      삭제
-                    </div>
-                  </div>
-                )}
-              </div>
+                  )}
+                </div>
+              ) : (
+                ''
+              )}
             </div>
           </div>
           <RiArrowDropDownLine />

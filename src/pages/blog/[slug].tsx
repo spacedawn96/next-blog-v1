@@ -32,6 +32,8 @@ import useEditComment from 'src/hooks/useEditComment';
 import Buttons from 'src/component/common/Button';
 import Comments from 'src/component/Comments/Comments';
 import SubComments from 'src/component/Comments/SubComments';
+import useGetUser from 'src/component/TopBanner.tsx/hooks/useGetUser';
+import { toast, ToastContainer } from 'react-nextjs-toast';
 
 const PostPageTap = styled.div`
   .post-wrapper {
@@ -224,6 +226,7 @@ function PostPage(props: PostPageProps) {
   const dispatch = useDispatch();
   const [isInput, setisInput] = useState(false);
   const post = useSelector((state: RootState) => state.post);
+  const { data: userData, loading: userLoding } = useGetUser();
   const { loading, error: getError, data } = useGetPosts();
   const { commentsLoading, commentsError, commentstData } = useGetComments();
   const {
@@ -290,8 +293,17 @@ function PostPage(props: PostPageProps) {
     setEditComment(!editComment);
   };
 
+  const onClickNotify = e => {
+    e.preventDefault();
+    toast.notify(`로그인이 필요합니다`, {
+      duration: 2,
+      type: 'error',
+    });
+  };
+
   return (
     <>
+      <ToastContainer align={'left'} />
       <PostPageTap>
         <TopBanner />
         <div className="sticky-wrapper">
@@ -332,20 +344,26 @@ function PostPage(props: PostPageProps) {
         <div className="comments-wrapper">
           <div className="comments-text-wrapper">
             <div className="comments-count">{getComments.length} 개의 댓글</div>
-            <div className="comments-edit">
-              <Link href={`/write/${findId}`}>
-                <div onClick={getPostData}>
-                  <a>수정</a>
-                </div>
-              </Link>
-              <div onClick={e => DeletePostSubmit(e, findId)}>삭제</div>
-            </div>
+            {userData?.me?.id === findData?.user?.id ? (
+              <div className="comments-edit">
+                <Link href={`/write/${findId}`}>
+                  <div onClick={getPostData}>
+                    <a>수정</a>
+                  </div>
+                </Link>
+                <div onClick={e => DeletePostSubmit(e, findId)}>삭제</div>
+              </div>
+            ) : (
+              ''
+            )}
           </div>
           <CommentForm
             findId={findId}
             handleSubmit={handleSubmit}
             getText={getText}
             textOnChange={textOnChange}
+            userData={userData}
+            onClickNotify={onClickNotify}
           />
           {/* {getComments.map((el, id) => (
             <div key={id}>
@@ -383,12 +401,16 @@ function PostPage(props: PostPageProps) {
                   fixComment={fixComment}
                   DeleteCommentSubmit={DeleteCommentSubmit}
                   setIsopen={setIsopen}
+                  userData={userData}
                 />
               </div>
 
               {el.id == isOpen && on ? (
                 <>
-                  <form onSubmit={e => subHandleSubmit(e, findData.id)}>
+                  <form
+                    onSubmit={e => {
+                      userData.me ? subHandleSubmit(e, findData.id) : onClickNotify(e);
+                    }}>
                     <input
                       className="commentsInput"
                       placeholder="댓글을 입력하세요"
@@ -416,6 +438,8 @@ function PostPage(props: PostPageProps) {
                     editSubCommentInput={editSubCommentInput}
                     EditCommentSubmit={EditCommentSubmit}
                     DeleteCommentSubmit={DeleteCommentSubmit}
+                    userData={userData}
+                    findData={findData}
                   />
                 </>
               ))}

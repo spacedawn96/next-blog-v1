@@ -25,6 +25,8 @@ export type SubCommentsProps = {
   editSubCommentInput;
   EditCommentSubmit;
   DeleteCommentSubmit;
+  userData;
+  findData;
 };
 
 function SubComments(props: SubCommentsProps) {
@@ -49,6 +51,7 @@ function SubComments(props: SubCommentsProps) {
                     onChange={props.editSubCommentInput}
                     type="text"
                   />
+
                   <div className="comments-edit-wrapper">
                     <div
                       onClick={e => {
@@ -64,16 +67,21 @@ function SubComments(props: SubCommentsProps) {
               ) : (
                 <>
                   {props.ele.text}
-                  <div className="comments-edit-wrapper">
-                    <div onClick={fixSubComment} className="sub-color">
-                      수정
+
+                  {props.userData?.me?.id == props.el.user.id ? (
+                    <div className="comments-edit-wrapper">
+                      <div onClick={fixSubComment} className="sub-color">
+                        수정
+                      </div>
+                      <div
+                        className="sub-color"
+                        onClick={e => props.DeleteCommentSubmit(e, props.ele.id)}>
+                        삭제
+                      </div>
                     </div>
-                    <div
-                      className="sub-color"
-                      onClick={e => props.DeleteCommentSubmit(e, props.ele.id)}>
-                      삭제
-                    </div>
-                  </div>
+                  ) : (
+                    ''
+                  )}
                 </>
               )}
             </SubCommentsTap>
