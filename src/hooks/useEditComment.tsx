@@ -7,8 +7,6 @@ export default function useEditComment() {
   const EditCommentSubmit = async (e, commentId, text) => {
     e.preventDefault();
 
-    console.log(commentId);
-    console.log(text);
     editComment({
       variables: {
         id: commentId,
@@ -20,12 +18,10 @@ export default function useEditComment() {
           query: Get_Comment,
         });
 
-        console.log(data);
-        console.log(editComment);
         const findData = data.comment.find(el => el.id == commentId);
         const findIndex = data.comment.indexOf(findData);
 
-        const findSubData = data.comment[findIndex - 1].replies.find(
+        const findSubData = data.comment[findIndex].replies.find(
           el => el.id == commentId,
         );
 
@@ -33,7 +29,7 @@ export default function useEditComment() {
           query: Get_Comment,
           data: {
             ...data,
-            comment: [findSubData == editComment.editComment],
+            comment: [findData == editComment.editComment],
           },
         });
       },

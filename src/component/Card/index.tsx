@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import heightMedia from 'src/styles/height';
 
 const CardTap = styled.div`
   background: #fff;
@@ -12,6 +13,10 @@ const CardTap = styled.div`
   background: ${props => props.color};
   margin-top: 5vh;
   height: 50vh;
+  ${heightMedia.custom(800)} {
+    height: unset;
+  }
+
   label,
   input {
     display: block;

@@ -6,16 +6,23 @@ import Buttons from '../common/Button';
 import { useRouter } from 'next/router';
 import Router from 'next/router';
 import { ApolloError } from '@apollo/client';
+import media from 'src/styles/media';
 
 const LoginFormTap = styled.div`
-  width: 20vw;
-  margin: 0 auto;
-  height: 30vh;
+  margin-top: 4rem;
   display: flex;
   align-items: flex-end;
+  ${media.custom(500)} {
+    display: flex;
+    justify-content: center;
+  }
   .button-wrapper {
+    width: 150%;
     display: flex;
     justify-content: flex-end;
+    ${media.custom(500)} {
+      width: 100%;
+    }
   }
 `;
 
@@ -53,11 +60,7 @@ function LoginForm(props: LoginFormProps) {
           value={props.inputs.password}
           onChange={props.handleChange}
         />
-        <p>
-          {props.loginError?.graphQLErrors.map(({ message }, i) => (
-            <span key={i}>{message}</span>
-          ))}
-        </p>
+
         <div className="button-wrapper">
           <Buttons
             color="blue"

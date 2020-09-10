@@ -2,20 +2,23 @@ import React from 'react';
 import styled from 'styled-components';
 import Navbar from './NavBar';
 import useGetUser from './hooks/useGetUser';
+import heightMedia from 'src/styles/height';
+import media from 'src/styles/media';
 
 export const Logo = require('./logo.png');
 
 const TopBannerTap = styled.div`
   height: 42vh;
+
   background: url('https://designmodo.com/wp-content/uploads/2020/06/google-analytics-ux.jpg')
     no-repeat center;
-  .layout-wrapper {
-    width: 100%;
-    height: 40vh;
-  }
+  background-size: cover;
 `;
 
 const BarCenter = styled.div`
+  ${heightMedia.custom(600)} {
+    display: none;
+  }
   display: inline-block;
   text-align: center;
   padding-top: 4rem;
@@ -47,7 +50,7 @@ export type TopBannerProps = {
 };
 
 export const item = ['login', 'register'];
-export const item2 = ['write' , 'menu'];
+export const item2 = ['write', 'menu'];
 
 function TopBanner(props: TopBannerProps) {
   const { data } = useGetUser();

@@ -10,7 +10,6 @@ export const NavLogo = styled.div`
   display: flex;
   justify-content: space-around;
   padding-top: 0.5rem;
-  height: 8vh;
   line-height: 1.5;
   align-items: center;
   transition: background 0.25s;
@@ -20,7 +19,6 @@ export const NavLogo = styled.div`
   ${media.custom(400)} {
     display: flex;
     flex-wrap: wrap;
-    height: 12vh;
     line-height: 1.5;
   }
 

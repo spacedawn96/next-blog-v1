@@ -68,7 +68,7 @@ function SubComments(props: SubCommentsProps) {
                 <>
                   {props.ele.text}
 
-                  {props.userData?.me?.id == props.el.user.id ? (
+                  {props.userData?.me?.id == props.ele.user.id ? (
                     <div className="comments-edit-wrapper">
                       <div onClick={fixSubComment} className="sub-color">
                         수정

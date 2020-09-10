@@ -36,9 +36,11 @@ const PostCardTap = styled.div<{
     }
     ${media.custom(570)} {
       width: ${props => (props.large ? '320px' : '270px')};
+      height: ${props => (props.large ? '320px' : '270px')};
     }
     ${media.custom(420)} {
       width: ${props => (props.large ? '250px' : '270px')};
+      height: ${props => (props.large ? '320px' : '270px')};
     }
   }
 

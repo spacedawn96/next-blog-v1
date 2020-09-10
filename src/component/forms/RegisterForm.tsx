@@ -4,16 +4,24 @@ import LabelInput from '../common/LabelInput';
 import Buttons from '../common/Button';
 import { useRouter } from 'next/router';
 import { ApolloError } from '@apollo/client';
+import media from 'src/styles/media';
+import { toast, ToastContainer } from 'react-nextjs-toast';
 
 const RegisterFormTap = styled.div`
-  width: 20vw;
-  margin: 0 auto;
-  height: 41vh;
+  margin-top: 4rem;
   display: flex;
   align-items: flex-end;
+  ${media.custom(500)} {
+    display: flex;
+    justify-content: center;
+  }
   .auth-btn {
+    width: 150%;
     display: flex;
     justify-content: flex-end;
+    ${media.custom(500)} {
+      width: 100%;
+    }
   }
 `;
 
@@ -58,11 +66,6 @@ function RegisterForm(props: RegisterFormProps) {
           value={props.inputs?.password}
           onChange={props.handleChange}
         />
-        <p>
-          {props.registerError?.graphQLErrors.map(({ message }, i) => (
-            <span key={i}>{message}</span>
-          ))}
-        </p>
         <div className="auth-btn">
           <Buttons color="blue" size={24} iconAfter="arrow-right">
             Sign Up

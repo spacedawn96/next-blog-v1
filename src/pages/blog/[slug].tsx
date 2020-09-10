@@ -34,12 +34,29 @@ import Comments from 'src/component/Comments/Comments';
 import SubComments from 'src/component/Comments/SubComments';
 import useGetUser from 'src/component/TopBanner.tsx/hooks/useGetUser';
 import { toast, ToastContainer } from 'react-nextjs-toast';
+import media from 'src/styles/media';
+import { AiOutlineUserAdd } from 'react-icons/ai';
+import { AiOutlineUserDelete } from 'react-icons/ai';
+import { TiHeartOutline } from 'react-icons/ti';
+import { TiHeart } from 'react-icons/ti';
 
 const PostPageTap = styled.div`
   .post-wrapper {
     width: 40%;
     margin: 0 auto;
     padding: 6rem;
+    ${media.custom(1000)} {
+      padding: 0rem;
+    }
+    ${media.custom(768)} {
+      width: 60%;
+    }
+    ${media.custom(600)} {
+      width: 80%;
+    }
+    ${media.custom(400)} {
+      width: 90%;
+    }
   }
   .card-wrapper {
     width: 50%;
@@ -78,6 +95,19 @@ const PostPageTap = styled.div`
     width: 40%;
     margin: 0 auto;
     padding: 6rem;
+    ${media.custom(1000)} {
+      padding: 3rem;
+    }
+    ${media.custom(768)} {
+      width: 60%;
+    }
+    ${media.custom(600)} {
+      padding: 0rem;
+      width: 80%;
+    }
+    ${media.custom(400)} {
+      width: 90%;
+    }
   }
 
   .comments-text-wrapper {
@@ -174,9 +204,25 @@ const PostPageTap = styled.div`
     font-weight: 500;
     font-size: 1rem;
   }
+  .comments-mini {
+    display: flex;
+    align-items: center;
+  }
+  .follow-visible {
+    display: none;
+    ${media.custom(1500)} {
+      display: unset;
+    }
+  }
+  .like-visible {
+    display: none;
+    ${media.custom(1000)} {
+      display: unset;
+    }
+  }
 `;
 const Title = styled.div`
-  max-width: 780px;
+  word-wrap: break-word;
   font-size: 48px;
   margin-bottom: 25px;
   font-weight: 800;
@@ -329,6 +375,7 @@ function PostPage(props: PostPageProps) {
         </div>
         <div className="post-wrapper">
           <Title> {capitalize(findData.title)}</Title>
+
           {findData.tags?.name ? (
             <div className="tag"> {escape(findData.tags.name)} </div>
           ) : (
@@ -343,7 +390,34 @@ function PostPage(props: PostPageProps) {
         </div>
         <div className="comments-wrapper">
           <div className="comments-text-wrapper">
-            <div className="comments-count">{getComments.length} 개의 댓글</div>
+            <div className="comments-mini">
+              <div className="comments-count">{getComments.length} 개의 댓글</div>
+              {userData.me ? (
+                <>
+                  <div className="like-visible">
+                    {isLikeBoolean ? (
+                      <TiHeart onClick={UnlikehandleSubmit} />
+                    ) : (
+                      <TiHeartOutline onClick={LikehandleSubmit} />
+                    )}
+                  </div>
+                  <div className="follow-visible">
+                    {BooleanIsFollowing ? (
+                      <AiOutlineUserDelete onClick={unFollowHandleSubmit} />
+                    ) : (
+                      <AiOutlineUserAdd onClick={followHandleSubmit} />
+                    )}
+                  </div>
+                </>
+              ) : (
+                <>
+                  <TiHeartOutline onClick={e => onClickNotify(e)} />
+                  <div className="follow-visible">
+                    <AiOutlineUserAdd onClick={e => onClickNotify(e)} />
+                  </div>
+                </>
+              )}
+            </div>
             {userData?.me?.id === findData?.user?.id ? (
               <div className="comments-edit">
                 <Link href={`/write/${findId}`}>

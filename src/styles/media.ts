@@ -1,4 +1,6 @@
 export const customMediaQuery = (maxWidth: number) => `@media (max-width: ${maxWidth}px)`;
+export const customHeigtMediaQuery = (maxHeigt: number) =>
+  `@media (max-height: ${maxHeigt}px)`;
 
 export const breakpoints = {
   xlarge: '1200px',
@@ -8,6 +10,13 @@ export const breakpoints = {
 };
 
 const media = {
+  custom: customMediaQuery,
+  desktop: customMediaQuery(922),
+  tablet: customMediaQuery(768),
+  phone: customMediaQuery(576),
+};
+
+const heightMedia = {
   custom: customMediaQuery,
   desktop: customMediaQuery(922),
   tablet: customMediaQuery(768),

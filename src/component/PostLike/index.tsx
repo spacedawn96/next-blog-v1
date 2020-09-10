@@ -3,8 +3,12 @@ import styled from 'styled-components';
 import styles from './index.module.scss';
 import { toast, ToastContainer } from 'react-nextjs-toast';
 import useGetUser from '../TopBanner.tsx/hooks/useGetUser';
+import media from 'src/styles/media';
 
 const PostLikeTap = styled.div<{ isLikeBoolean: boolean }>`
+  ${media.custom(1000)} {
+    display: none;
+  }
   .heart {
     width: 0.5em;
     height: 0.5em;

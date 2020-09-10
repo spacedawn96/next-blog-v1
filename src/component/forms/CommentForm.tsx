@@ -1,8 +1,13 @@
 import React from 'react';
 import styled from 'styled-components';
 import Buttons from '../common/Button';
+import media from 'src/styles/media';
 
 const CommentFormTap = styled.div`
+  ${media.custom(400)} {
+    width: 90%;
+  }
+  width: 100%;
   .button-flex {
     display: flex;
     justify-content: flex-end;

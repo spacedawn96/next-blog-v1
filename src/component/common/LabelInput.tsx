@@ -1,8 +1,13 @@
 import React, { useCallback, useState } from 'react';
 import { colors } from 'src/styles/colors';
 import styled, { css } from 'styled-components';
+import media from 'src/styles/media';
 
 const LabelInputTap = styled.div<{ focus: boolean }>`
+  width: 150%;
+  ${media.custom(500)} {
+    width: 100%;
+  }
   label {
     font-weight: bold;
     font-size: 1rem;
@@ -17,8 +22,7 @@ const LabelInputTap = styled.div<{ focus: boolean }>`
   }
   input {
     display: block;
-    width: 20vw;
-    line-height: 1.5;
+
     font-size: 1.5rem;
     border: none;
     outline: none;
@@ -32,7 +36,6 @@ const LabelInputTap = styled.div<{ focus: boolean }>`
   &::placeholder {
     color: ${colors.greenBase};
   }
-
   .input-wrapper {
     padding-bottom: 0.5rem;
     margin-bottom: 1rem;

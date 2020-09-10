@@ -6,9 +6,14 @@ import useLogin from 'src/hooks/useLogin';
 import Card from 'src/component/Card';
 import Footer from 'src/component/Footer';
 import LoginForm from 'src/component/forms/LoginForm';
+import heightMedia from 'src/styles/height';
 const LoginTap = styled.div`
   background: #eceff3;
-  height: 80vh;
+  height: 100vh;
+  ${heightMedia.custom(800)} {
+    height: unset;
+    background: #fff;
+  }
 `;
 
 export type LoginProps = {};
@@ -28,8 +33,12 @@ function Login(props: LoginProps) {
             loginError={loginError}
           />
         </Card>
+        <p style={{ textAlign: 'center', marginTop: '1rem' }}>
+          {loginError?.graphQLErrors.map(({ message }, i) => (
+            <span key={i}>{message}</span>
+          ))}
+        </p>
       </LoginTap>
-      <Footer />
     </>
   );
 }

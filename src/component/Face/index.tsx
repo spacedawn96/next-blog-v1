@@ -3,8 +3,13 @@ import styled from 'styled-components';
 import classNames from 'classnames';
 import card from './card.module.scss';
 import useGetUser from '../TopBanner.tsx/hooks/useGetUser';
+import media from 'src/styles/media';
 
-const FaceTap = styled.div``;
+const FaceTap = styled.div`
+  ${media.custom(1500)} {
+    display: none;
+  }
+`;
 
 export type FaceProps = {
   username?: string;
@@ -25,7 +30,7 @@ function Face(props: FaceProps) {
   const moveClass = classNames(`${card.shadow} ${card.move}`);
 
   return (
-    <>
+    <FaceTap>
       {props.error || props.unfollowError ? (
         <div className={card.container}>
           <div className={card.errorBox}>
@@ -81,7 +86,7 @@ function Face(props: FaceProps) {
           </div>
         </div>
       )}
-    </>
+    </FaceTap>
   );
 }
 
