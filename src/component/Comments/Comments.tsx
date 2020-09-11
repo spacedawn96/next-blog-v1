@@ -24,14 +24,9 @@ function Comments(props: CommentsProps) {
   const [editComment, setEditComment] = useState(false);
   const [editSubComment, setEditSubComment] = useState(false);
   const [editText, setEditText] = useState('');
-  const [subEditText, subSetEditText] = useState('');
 
   const editCommentInput = e => {
     setEditText(e.target.value);
-  };
-
-  const editSubCommentInput = e => {
-    subSetEditText(e.target.value);
   };
 
   const fixComment = () => {
@@ -53,12 +48,19 @@ function Comments(props: CommentsProps) {
             <div>User {props.el.user?.username}</div>
             <div className="comments-text">
               {editComment ? (
-                <input
-                  name="text"
-                  value={props.editText}
-                  onChange={props.editCommentInput}
-                  type="text"
-                />
+                <form
+                  onSubmit={e => {
+                    props.EditCommentSubmit(e, props.el.id, editText);
+                    fixComment();
+                  }}>
+                  <input
+                    name="text"
+                    value={editText}
+                    onChange={editCommentInput}
+                    type="text"
+                    placeholder="댓글을 입력해주세요!"
+                  />
+                </form>
               ) : (
                 props.el.text
               )}
@@ -85,13 +87,7 @@ function Comments(props: CommentsProps) {
                 <div className="edit-button">
                   {editComment ? (
                     <>
-                      <div
-                        onClick={e => {
-                          props.EditCommentSubmit(e, props.el.id, props.editText);
-                          fixComment();
-                        }}>
-                        수정
-                      </div>
+                      <div onClick={fixComment}>수정</div>
                       <div>취소</div>
                     </>
                   ) : (

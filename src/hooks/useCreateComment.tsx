@@ -15,22 +15,22 @@ export default function useCreateComment() {
     setSubText(e.target.value);
   };
 
-  const [createComment] = useMutation(Create_Comment);
+  const [createComment] = useMutation(Create_Comment, {
+    onCompleted({ createComment }) {},
+  });
 
-  const handleSubmit = async (e, findId) => {
+  const handleSubmit = async (e, findId, Text) => {
     e.preventDefault();
 
     createComment({
       variables: {
         post_id: findId,
-        text: getText,
+        text: Text,
       },
       update: (proxy, { data: createComment }) => {
         const data = proxy.readQuery({
           query: Get_Comment,
         });
-
-        console.log(data);
 
         proxy.writeQuery({
           query: Get_Comment,
@@ -43,13 +43,13 @@ export default function useCreateComment() {
     });
   };
 
-  const subHandleSubmit = async (e, findId) => {
+  const subHandleSubmit = async (e, findId, subText) => {
     e.preventDefault();
 
     createComment({
       variables: {
         post_id: findId,
-        text: getSubText,
+        text: subText,
         comment_id: isOpen,
       },
 

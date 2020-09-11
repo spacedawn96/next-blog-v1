@@ -94,12 +94,15 @@ const PostCardTap = styled.div<{
 `;
 
 const Body = styled.div`
-  word-break: break-word;
-  overflow-wrap: break-word;
   font-size: 0.875rem;
   line-height: 1.5;
   color: rgb(73, 80, 87);
   margin: 0px 0px 1.5rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 5;
+  -webkit-box-orient: vertical;
 `;
 type userType = {
   id: string;

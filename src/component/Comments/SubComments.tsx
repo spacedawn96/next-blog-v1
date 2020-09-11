@@ -31,6 +31,11 @@ export type SubCommentsProps = {
 
 function SubComments(props: SubCommentsProps) {
   const [editSubComment, setEditSubComment] = useState(false);
+  const [subEditText, subSetEditText] = useState('');
+
+  const editSubCommentInput = e => {
+    subSetEditText(e.target.value);
+  };
 
   const fixSubComment = () => {
     setEditSubComment(!editSubComment);
@@ -45,17 +50,22 @@ function SubComments(props: SubCommentsProps) {
               <div> User {props.ele.user?.username} </div>
               {editSubComment ? (
                 <>
-                  <input
-                    name="text"
-                    value={props.subEditText}
-                    onChange={props.editSubCommentInput}
-                    type="text"
-                  />
-
+                  <form
+                    onSubmit={e => {
+                      props.EditCommentSubmit(e, props.ele.id, subEditText);
+                      fixSubComment();
+                    }}>
+                    <input
+                      name="text"
+                      value={subEditText}
+                      onChange={editSubCommentInput}
+                      type="text"
+                    />
+                  </form>
                   <div className="comments-edit-wrapper">
                     <div
                       onClick={e => {
-                        props.EditCommentSubmit(e, props.ele.id, props.subEditText);
+                        props.EditCommentSubmit(e, props.ele.id, subEditText);
                         fixSubComment();
                       }}
                       className="sub-color">

@@ -7,7 +7,6 @@ const ListItemTap = styled.div<{
 }>`
   display: flex;
   font-size: 1.2rem;
-  padding: 0 15px;
   font-weight: 600;
   transition: color 0.25s;
   cursor: pointer;

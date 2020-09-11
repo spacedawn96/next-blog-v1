@@ -9,8 +9,7 @@ const FooterTap = styled.div`
   }
 
   .patterns {
-    margin-top: 2rem;
-    height: 20vh;
+    height: 25vh;
   }
 
   svg text {

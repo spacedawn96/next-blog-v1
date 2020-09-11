@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import Buttons from '../common/Button';
 import media from 'src/styles/media';
@@ -20,6 +20,7 @@ export type CommentFormProps = {
   handleSubmit: (
     e: React.FormEvent<HTMLFormElement>,
     findId: React.FormEvent<HTMLFormElement>,
+    test: string,
   ) => void;
   getText: string;
   textOnChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
@@ -29,21 +30,28 @@ export type CommentFormProps = {
 };
 
 function CommentForm(props: CommentFormProps) {
+  const [Text, setText] = useState('');
+
+  const textOnChange = e => {
+    setText(e.target.value);
+  };
+
   return (
     <CommentFormTap>
       <form
         onSubmit={e => {
           props.userData.me
-            ? props.handleSubmit(e, props.findId)
+            ? props.handleSubmit(e, props.findId, Text)
             : props.onClickNotify(e);
+          props.userData.me ? setText('') : '';
         }}>
         <input
           className="commentsInput"
           placeholder="댓글을 입력하세요"
           name="text"
-          value={props.getText}
+          value={Text}
           type="text"
-          onChange={props.textOnChange}
+          onChange={textOnChange}
         />
         <div className="button-flex">
           <Buttons color="blue" size={24} iconBefore="edit">

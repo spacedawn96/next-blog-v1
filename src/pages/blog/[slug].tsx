@@ -29,7 +29,6 @@ import { initializeApollo } from 'src/lib/apollo';
 import CommentsItem from 'src/component/forms/CommentsItem';
 import useDeleteComment from 'src/hooks/useDeleteComment';
 import useEditComment from 'src/hooks/useEditComment';
-import Buttons from 'src/component/common/Button';
 import Comments from 'src/component/Comments/Comments';
 import SubComments from 'src/component/Comments/SubComments';
 import useGetUser from 'src/component/TopBanner.tsx/hooks/useGetUser';
@@ -39,6 +38,7 @@ import { AiOutlineUserAdd } from 'react-icons/ai';
 import { AiOutlineUserDelete } from 'react-icons/ai';
 import { TiHeartOutline } from 'react-icons/ti';
 import { TiHeart } from 'react-icons/ti';
+import SubCommentsForm from 'src/component/forms/SubCommentsForm';
 
 const PostPageTap = styled.div`
   .post-wrapper {
@@ -99,10 +99,11 @@ const PostPageTap = styled.div`
       padding: 3rem;
     }
     ${media.custom(768)} {
+      padding: 0rem;
       width: 60%;
+      margin-top: 3rem;
     }
     ${media.custom(600)} {
-      padding: 0rem;
       width: 80%;
     }
     ${media.custom(400)} {
@@ -143,6 +144,7 @@ const PostPageTap = styled.div`
     display: flex;
     justify-content: space-between;
     color: rgb(134, 142, 150);
+    margin-top: 1rem;
   }
 
   .commentsInput {
@@ -232,6 +234,9 @@ const Title = styled.div`
   line-height: 1.35;
   margin-block-start: 0.83em;
   margin-block-end: 0.83em;
+  ${media.custom(1000)} {
+    font-size: 36px;
+  }
 `;
 
 const styleMap = {
@@ -439,27 +444,6 @@ function PostPage(props: PostPageProps) {
             userData={userData}
             onClickNotify={onClickNotify}
           />
-          {/* {getComments.map((el, id) => (
-            <div key={id}>
-              <CommentsItem
-                el={el}
-                ele={el}
-                isInput={isInput}
-                getSubText={getSubText}
-                subTextOnChange={subTextOnChange}
-                setIsopen={setIsopen}
-                toggle={toggle}
-                on={on}
-                isOpen={isOpen}
-                subHandleSubmit={subHandleSubmit}
-                findData={findData}
-                EditCommentSubmit={EditCommentSubmit}
-                findId={findId}
-                setisInput={setisInput}
-                DeleteCommentSubmit={DeleteCommentSubmit}
-              />
-            </div>
-          ))} */}
 
           {getComments.map((el, id) => (
             <>
@@ -481,24 +465,15 @@ function PostPage(props: PostPageProps) {
 
               {el.id == isOpen && on ? (
                 <>
-                  <form
-                    onSubmit={e => {
-                      userData.me ? subHandleSubmit(e, findData.id) : onClickNotify(e);
-                    }}>
-                    <input
-                      className="commentsInput"
-                      placeholder="댓글을 입력하세요"
-                      name="text"
-                      value={getSubText}
-                      type="text"
-                      onChange={subTextOnChange}
-                    />
-                    <div className="button-flex">
-                      <Buttons color="blue" size={24} iconBefore="edit">
-                        댓글 작성
-                      </Buttons>
-                    </div>
-                  </form>
+                  <SubCommentsForm
+                    userData={userData}
+                    subHandleSubmit={subHandleSubmit}
+                    findData={findData}
+                    onClickNotify={onClickNotify}
+                    isOpen={isOpen}
+                    on={on}
+                    toggle={toggle}
+                  />
                 </>
               ) : (
                 ''

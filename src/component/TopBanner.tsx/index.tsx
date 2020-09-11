@@ -9,12 +9,10 @@ export const Logo = require('./logo.png');
 
 const TopBannerTap = styled.div`
   height: 42vh;
-
   background: url('https://designmodo.com/wp-content/uploads/2020/06/google-analytics-ux.jpg')
     no-repeat center;
   background-size: cover;
 `;
-
 const BarCenter = styled.div`
   ${heightMedia.custom(600)} {
     display: none;
