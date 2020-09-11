@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import Buttons from 'src/component/common/Button';
+import { checkEmpty } from 'src/utils/isNull';
 const SubCommentsFormTap = styled.div``;
 
 export type SubCommentsFormProps = {
@@ -11,6 +12,7 @@ export type SubCommentsFormProps = {
   isOpen;
   on;
   toggle;
+  onClickNotifyCheckString;
 };
 
 function SubCommentsForm(props: SubCommentsFormProps) {
@@ -24,9 +26,10 @@ function SubCommentsForm(props: SubCommentsFormProps) {
     <>
       <form
         onSubmit={e => {
-          props.userData.me
-            ? props.subHandleSubmit(e, props.findData.id, SubText)
-            : props.onClickNotify(e);
+          props.userData.me ? e.preventDefault() : props.onClickNotify(e);
+          checkEmpty(SubText)
+            ? props.onClickNotifyCheckString(e)
+            : props.subHandleSubmit(e, props.findData.id, SubText);
           props.userData.me ? setSubText('') : '';
         }}>
         <input

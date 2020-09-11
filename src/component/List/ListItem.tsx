@@ -10,6 +10,7 @@ const ListItemTap = styled.div<{
   font-weight: 600;
   transition: color 0.25s;
   cursor: pointer;
+  padding: 0 0.5rem;
 
   color: ${props => props.color};
   ${hover =>

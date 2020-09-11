@@ -31,17 +31,26 @@ const PostCardTap = styled.div<{
       cursor: pointer;
       opacity: 1;
     }
-    ${media.custom(370)} {
-      width: ${props => (props.large ? '450px' : '270px')};
-    }
     ${media.custom(570)} {
-      width: ${props => (props.large ? '320px' : '270px')};
-      height: ${props => (props.large ? '320px' : '270px')};
+      width: ${props => (props.large ? '400px' : '320px')};
+      height: ${props => (props.large ? '270px' : '270px')};
     }
+
+    ${media.custom(500)} {
+      width: ${props => (props.large ? '350px' : '320px')};
+     
+    }
+
     ${media.custom(420)} {
-      width: ${props => (props.large ? '250px' : '270px')};
-      height: ${props => (props.large ? '320px' : '270px')};
+      width: ${props => (props.large ? '300px' : '300px')};
+      height: ${props => (props.large ? '280px' : '280px')};
     }
+
+    ${media.custom(360)} {
+      width: ${props => (props.large ? '260px' : '260px')};
+    }
+ 
+  
   }
 
   .img {

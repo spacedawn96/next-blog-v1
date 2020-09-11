@@ -216,12 +216,6 @@ const PostPageTap = styled.div`
       display: unset;
     }
   }
-  .like-visible {
-    display: none;
-    ${media.custom(1000)} {
-      display: unset;
-    }
-  }
 `;
 const Title = styled.div`
   word-wrap: break-word;
@@ -236,6 +230,13 @@ const Title = styled.div`
   margin-block-end: 0.83em;
   ${media.custom(1000)} {
     font-size: 36px;
+  }
+`;
+
+const LikeVisible = styled.div`
+  display: none;
+  ${media.custom(1000)} {
+    display: unset;
   }
 `;
 
@@ -351,6 +352,13 @@ function PostPage(props: PostPageProps) {
       type: 'error',
     });
   };
+  const onClickNotifyCheckString = e => {
+    e.preventDefault();
+    toast.notify(`댓글이 없습니다`, {
+      duration: 2,
+      type: 'error',
+    });
+  };
 
   return (
     <>
@@ -399,13 +407,13 @@ function PostPage(props: PostPageProps) {
               <div className="comments-count">{getComments.length} 개의 댓글</div>
               {userData.me ? (
                 <>
-                  <div className="like-visible">
+                  <LikeVisible>
                     {isLikeBoolean ? (
                       <TiHeart onClick={UnlikehandleSubmit} />
                     ) : (
                       <TiHeartOutline onClick={LikehandleSubmit} />
                     )}
-                  </div>
+                  </LikeVisible>
                   <div className="follow-visible">
                     {BooleanIsFollowing ? (
                       <AiOutlineUserDelete onClick={unFollowHandleSubmit} />
@@ -443,6 +451,7 @@ function PostPage(props: PostPageProps) {
             textOnChange={textOnChange}
             userData={userData}
             onClickNotify={onClickNotify}
+            onClickNotifyCheckString={onClickNotifyCheckString}
           />
 
           {getComments.map((el, id) => (
@@ -460,6 +469,7 @@ function PostPage(props: PostPageProps) {
                   DeleteCommentSubmit={DeleteCommentSubmit}
                   setIsopen={setIsopen}
                   userData={userData}
+                  onClickNotifyCheckString={onClickNotifyCheckString}
                 />
               </div>
 
@@ -473,6 +483,7 @@ function PostPage(props: PostPageProps) {
                     isOpen={isOpen}
                     on={on}
                     toggle={toggle}
+                    onClickNotifyCheckString={onClickNotifyCheckString}
                   />
                 </>
               ) : (
@@ -489,6 +500,7 @@ function PostPage(props: PostPageProps) {
                     DeleteCommentSubmit={DeleteCommentSubmit}
                     userData={userData}
                     findData={findData}
+                    onClickNotifyCheckString={onClickNotifyCheckString}
                   />
                 </>
               ))}

@@ -2,15 +2,12 @@ import React, { useRef, useEffect } from 'react';
 import styled from 'styled-components';
 import { RichUtils } from 'draft-js';
 import { convertToHTML } from 'draft-convert';
-
 import Editor, { composeDecorators } from 'draft-js-plugins-editor';
 import createHashtagPlugin from 'draft-js-hashtag-plugin';
 import hashtagStyles from './hashtagStyles.module.css';
 import createInlineToolbarPlugin from 'draft-js-inline-toolbar-plugin';
 import createLinkPlugin from 'draft-js-anchor-plugin';
 import { BoldButton } from 'draft-js-buttons';
-// import buttonStyles from './buttonStyles.module.css';
-// import toolbarStyles from './toolbarStyles.module.css';
 import linkStyles from './linkStyles.module.css';
 import BlockStyling from './BlockStyling.module.css';
 import ImageAdd from './ImageAdd';
@@ -28,6 +25,9 @@ import Tags from '../Tags';
 import TagsForm from '../forms/TagsForm';
 import { useDispatch, useSelector } from 'react-redux';
 import { PostInit } from 'src/store/post';
+import media from 'src/styles/media';
+import { checkEmpty } from 'src/utils/isNull';
+import { toast, ToastContainer } from 'react-nextjs-toast';
 
 const Title = styled.div`
   width: 60%;
@@ -40,6 +40,13 @@ const Title = styled.div`
   font-size: 17px;
   font-weight: 300;
   box-shadow: 0px 0px 3px 1px rgba(15, 15, 15, 0.17);
+  ${media.custom(1200)} {
+    width: 80%;
+  }
+
+  ${media.custom(600)} {
+    width: 100%;
+  }
 `;
 
 const EditorMainTap = styled.div`
@@ -114,14 +121,20 @@ const EditorMainTap = styled.div`
     min-height: 9rem;
     border-radius: 0 0 3px 3px;
     background-color: #fff;
-    padding: 5px;
     font-size: 17px;
     font-weight: 300;
     box-shadow: 0px 0px 3px 1px rgba(15, 15, 15, 0.17);
     height: 120vh;
-    padding: 4rem;
     width: 40vw;
+    padding: 2rem;
     margin: 0 auto;
+    ${media.custom(1200)} {
+      width: 80%;
+    }
+    ${media.custom(600)} {
+      width: 100%;
+      padding: 0.2rem;
+    }
     .hashtag {
       color: #1ca782;
       font-family: cursive;
@@ -155,6 +168,7 @@ const EditorMainTap = styled.div`
   }
   .editor-style-wrapeer {
     display: flex;
+    flex-wrap: wrap;
     margin: 1rem;
     margin-top: 4rem;
     width: 100%;
@@ -162,6 +176,10 @@ const EditorMainTap = styled.div`
   }
   .inline-style-options {
     display: flex;
+    flex-wrap: wrap;
+    ${media.custom(1200)} {
+      width: 70%;
+    }
   }
   .thumbnail-wrapper {
     margin-top: 1.5rem;
@@ -390,14 +408,23 @@ function EditorMain(props: EditorMainProps) {
     setTag(newTag);
   };
 
+  const onClickNotifyCheckString = e => {
+    e.preventDefault();
+    toast.notify(`제목이 비엇습니다`, {
+      duration: 2,
+      type: 'error',
+    });
+  };
+
   return (
     <>
       <EditorMainTap>
+        <ToastContainer align={'left'} />
         <form>
           <div className="my-little-app">
-            <div className="home-button">
+            {/* <div className="home-button">
               <BackButton />
-            </div>
+            </div> */}
             <Title>
               <input
                 name="title"
@@ -409,7 +436,11 @@ function EditorMain(props: EditorMainProps) {
               <button
                 className="post-button"
                 onClick={e =>
-                  router.query.slug === undefined ? handleSubmit(e) : EditSubmit(e)
+                  checkEmpty(inputs)
+                    ? onClickNotifyCheckString(e)
+                    : router.query.slug === undefined
+                    ? handleSubmit(e)
+                    : EditSubmit(e)
                 }>
                 완료
               </button>

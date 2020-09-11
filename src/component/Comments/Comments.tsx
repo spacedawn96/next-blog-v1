@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { IoIosAddCircleOutline } from 'react-icons/io';
 import { RiArrowDropDownLine } from 'react-icons/ri';
 import useGetUser from '../TopBanner.tsx/hooks/useGetUser';
+import { checkEmpty } from 'src/utils/isNull';
 
 const CommentsTap = styled.div``;
 
@@ -18,6 +19,7 @@ export type CommentsProps = {
   fixComment;
   DeleteCommentSubmit;
   userData;
+  onClickNotifyCheckString;
 };
 
 function Comments(props: CommentsProps) {
@@ -37,7 +39,6 @@ function Comments(props: CommentsProps) {
     setEditSubComment(!editSubComment);
   };
 
-  console.log(props.el.user.id);
   return (
     <>
       {props.el.reply ? (
@@ -50,15 +51,17 @@ function Comments(props: CommentsProps) {
               {editComment ? (
                 <form
                   onSubmit={e => {
-                    props.EditCommentSubmit(e, props.el.id, editText);
-                    fixComment();
+                    checkEmpty(editText)
+                      ? props.onClickNotifyCheckString(e)
+                      : props.EditCommentSubmit(e, props.el.id, editText);
+                    checkEmpty(editText) ? e.preventDefault() : fixComment();
                   }}>
                   <input
                     name="text"
                     value={editText}
                     onChange={editCommentInput}
                     type="text"
-                    placeholder="댓글을 입력해주세요!"
+                    placeholder="댓글을 입력해주세요"
                   />
                 </form>
               ) : (
@@ -87,17 +90,20 @@ function Comments(props: CommentsProps) {
                 <div className="edit-button">
                   {editComment ? (
                     <>
-                      <div onClick={fixComment}>수정</div>
-                      <div>취소</div>
-                    </>
-                  ) : (
-                    <div className="edit-button">
                       <div
-                        onClick={() => {
-                          fixComment();
+                        onClick={e => {
+                          checkEmpty(editText)
+                            ? props.onClickNotifyCheckString(e)
+                            : props.EditCommentSubmit(e, props.el.id, editText);
+                          checkEmpty(editText) ? e.preventDefault() : fixComment();
                         }}>
                         수정
                       </div>
+                      <div onClick={fixComment}>취소</div>
+                    </>
+                  ) : (
+                    <div className="edit-button">
+                      <div onClick={fixComment}>수정</div>
                       <div onClick={e => props.DeleteCommentSubmit(e, props.el.id)}>
                         삭제
                       </div>

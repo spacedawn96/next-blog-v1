@@ -10,6 +10,7 @@ export const NavLogo = styled.div`
   display: flex;
   justify-content: space-around;
   padding-top: 0.5rem;
+
   line-height: 1.5;
   align-items: center;
   transition: background 0.25s;
@@ -72,7 +73,7 @@ function Navbar(props: NavbarProps) {
     <NavLogo>
       <Link href="/">
         <a>
-          <img alt="logo" src={props.Logo} />{' '}
+          <img alt="logo" src={props.Logo} />
         </a>
       </Link>
       <div className="list-wrapper">
@@ -84,7 +85,6 @@ function Navbar(props: NavbarProps) {
               </Link>
             </>
           ))}
-
           {!loading && data.me ? (
             <LogoutButton onClick={logoutButton}>logout</LogoutButton>
           ) : (

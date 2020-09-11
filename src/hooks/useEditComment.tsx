@@ -7,6 +7,8 @@ export default function useEditComment() {
   const EditCommentSubmit = async (e, commentId, text) => {
     e.preventDefault();
 
+    console.log(commentId);
+    console.log(text);
     editComment({
       variables: {
         id: commentId,

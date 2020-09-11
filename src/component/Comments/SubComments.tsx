@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { checkEmpty } from 'src/utils/isNull';
 import styled from 'styled-components';
 
 const SubCommentsTap = styled.div`
@@ -27,6 +28,7 @@ export type SubCommentsProps = {
   DeleteCommentSubmit;
   userData;
   findData;
+  onClickNotifyCheckString;
 };
 
 function SubComments(props: SubCommentsProps) {
@@ -52,26 +54,35 @@ function SubComments(props: SubCommentsProps) {
                 <>
                   <form
                     onSubmit={e => {
-                      props.EditCommentSubmit(e, props.ele.id, subEditText);
-                      fixSubComment();
+                      checkEmpty(subEditText)
+                        ? props.onClickNotifyCheckString(e)
+                        : props.EditCommentSubmit(e, props.ele.id, subEditText);
+
+                      checkEmpty(subEditText) ? e.preventDefault() : fixSubComment();
                     }}>
                     <input
                       name="text"
                       value={subEditText}
                       onChange={editSubCommentInput}
                       type="text"
+                      placeholder="댓글을 입력하세요"
                     />
                   </form>
                   <div className="comments-edit-wrapper">
                     <div
                       onClick={e => {
-                        props.EditCommentSubmit(e, props.ele.id, subEditText);
-                        fixSubComment();
+                        checkEmpty(subEditText)
+                          ? props.onClickNotifyCheckString(e)
+                          : props.EditCommentSubmit(e, props.ele.id, subEditText);
+
+                        checkEmpty(subEditText) ? e.preventDefault() : fixSubComment();
                       }}
                       className="sub-color">
                       수정
                     </div>
-                    <div className="sub-color">취소</div>
+                    <div className="sub-color" onClick={fixSubComment}>
+                      취소
+                    </div>
                   </div>
                 </>
               ) : (
