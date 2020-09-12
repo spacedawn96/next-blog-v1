@@ -14,7 +14,7 @@ const Link = ({ entityKey, contentState, children }) => {
 const Img = ({ entityKey, contentState }) => {
   const { src } = contentState.getEntity(entityKey).getData();
   const resizeData = entityKey ? contentState.getEntity(entityKey).data.width : {};
-  const resizeData2 = resizeData * 5;
+  const resizeData2 = resizeData * 7;
   return (
     <img
       src={src}

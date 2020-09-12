@@ -13,42 +13,39 @@ const PostCardTap = styled.div<{
   width: 100%;
   margin: 0 auto;
   flex-wrap: wrap;
+  margin-top: 1rem;
   .post-wrapper {
-    width: ${props => (props.large ? '350px' : '320px')};
+    width: ${props => (props.large ? '340px' : '320px')};
     margin: 0 auto;
-    height: ${props => (props.large ? '400px' : '330px')};
-    padding-bottom: 3rem;
+    height: ${props => (props.large ? '360px' : '330px')};
+    padding-bottom: 6rem;
     border-radius: 8px;
     box-shadow: 0px 10px 20px rgba(10, 33, 65, 0.05), 0px 0px 2px rgba(0, 0, 0, 0.13);
     margin-top: 2.5rem;
     background: #fff;
     transition: all 0.5s ease;
     border-bottom-left-radius: 0;
-
     &: hover {
       box-shadow: 0 5px 24px rgba(0, 0, 0, 0.1);
       transform: translateY(-10px);
       cursor: pointer;
       opacity: 1;
     }
-
     ${media.custom(430)} {
       width: ${props => (props.large ? '300px' : '300px')};
       height: ${props => (props.large ? '300px' : '300px')};
     }
-
     ${media.custom(380)} {
       width: ${props => (props.large ? '260px' : '260px')};
     }
   }
-
   .img {
     height: 250px;
-    width: 350px;
-
+    width: 340px;
+    object-fit: fill;
     ${media.custom(430)} {
       width: 300px;
-      height: 200px;
+      height: 250px;
     }
     ${media.custom(380)} {
       width: 260px;
@@ -66,12 +63,12 @@ const PostCardTap = styled.div<{
     padding: 1rem;
   }
   .smallImg {
+    object-fit: fill;
     width: 320px;
-    height: 220px;
-
+    height: 250px;
     ${media.custom(430)} {
       width: 300px;
-      height: 200px;
+      height: 250px;
     }
     ${media.custom(380)} {
       width: 260px;
@@ -94,13 +91,11 @@ const PostCardTap = styled.div<{
     color: rgb(134, 142, 150);
     display: flex;
   }
-
   .madeBy {
     font-size: 0.75rem;
     line-height: 1.5;
     color: rgb(134, 142, 150);
   }
-
   .username {
     font-size: 0.8rem;
     font-weight: bold;
@@ -151,9 +146,7 @@ function PostCard(props: PostCardProps) {
             <div className="tag">{props.tag}</div>
             {props.thumbnail ? (
               props.isBig ? (
-                <div className="flt-card-head">
-                  <img src={props.thumbnail} className="img" />
-                </div>
+                <img src={props.thumbnail} className="img" />
               ) : (
                 ''
               )

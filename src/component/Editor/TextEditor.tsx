@@ -43,10 +43,6 @@ const Title = styled.div`
   ${media.custom(1200)} {
     width: 80%;
   }
-
-  ${media.custom(600)} {
-    width: 100%;
-  }
 `;
 
 const EditorMainTap = styled.div`
@@ -130,11 +126,12 @@ const EditorMainTap = styled.div`
     padding: 2rem;
     margin: 0 auto;
     ${media.custom(1200)} {
-      width: 80%;
+      width: 60vw;
     }
     ${media.custom(600)} {
-      width: 100%;
-      padding: 0.2rem;
+      all: unset;
+      line-height: 1.6;
+      word-break: break-word;
     }
     .hashtag {
       color: #1ca782;
@@ -171,16 +168,17 @@ const EditorMainTap = styled.div`
   .editor-style-wrapeer {
     display: flex;
     flex-wrap: wrap;
-    margin: 1rem;
-    margin-top: 4rem;
+
+    margin-top: 2rem;
     width: 100%;
     justify-content: center;
   }
   .inline-style-options {
     display: flex;
     flex-wrap: wrap;
+
     ${media.custom(1200)} {
-      width: 70%;
+      width: 100%;
     }
   }
   .thumbnail-wrapper {

@@ -6,6 +6,7 @@ import 'nprogress/nprogress.css'; //styles of nprogress
 import { useApollo } from 'src/lib/apollo';
 import { Provider } from 'react-redux';
 import store from 'src/store/store';
+import { ToastProvider } from 'react-toast-notifications';
 
 //Binding events.
 Router.events.on('routeChangeStart', () => NProgress.start());
@@ -16,11 +17,13 @@ function App({ Component, pageProps }) {
   const apolloClient = useApollo(pageProps.initialApolloState);
 
   return (
-    <Provider store={store}>
-      <ApolloProvider client={apolloClient}>
-        <Component {...pageProps} />
-      </ApolloProvider>
-    </Provider>
+    <ToastProvider placement="bottom-right" TransitionState="entering">
+      <Provider store={store}>
+        <ApolloProvider client={apolloClient}>
+          <Component {...pageProps} />
+        </ApolloProvider>
+      </Provider>
+    </ToastProvider>
   );
 }
 

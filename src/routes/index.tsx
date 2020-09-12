@@ -1,7 +1,7 @@
 import TopBanner from 'src/component/TopBanner.tsx';
 import PostCard from 'src/component/PostCard';
 import styled from 'styled-components';
-import { useState } from 'react';
+import { useEffect, useLayoutEffect, useState } from 'react';
 import React from 'react';
 import { useQuery, gql, useMutation } from '@apollo/client';
 import Pagination from 'src/component/Pagination';
@@ -11,6 +11,8 @@ import media from 'src/styles/media';
 import { initializeApollo } from '../lib/apollo';
 import useGetTopPosts from '../hooks/useGetTopPosts';
 import useGetPosts from 'src/hooks/useGetPosts';
+import { toast, ToastContainer } from 'react-nextjs-toast';
+import { useToasts } from 'react-toast-notifications';
 
 const TopBackground = styled.div`
   background: #f7f9fd;
@@ -60,6 +62,26 @@ const MainTitle = styled(Title)`
 export type HomePageProps = {};
 
 function IndexPage(props: HomePageProps) {
+  const { addToast } = useToasts();
+
+  const firstNotifications = () => {
+    addToast('adblock을 꺼야 섬네일이 보입니다', {
+      appearance: 'info',
+      autoDismiss: true,
+    });
+  };
+  useEffect(() => {
+    const isData = window.localStorage.getItem('myData');
+    if (isData) {
+    } else {
+      firstNotifications();
+    }
+    window.localStorage.setItem('myData', 'hi');
+    window.onunload = () => {
+      window.localStorage.clear();
+    };
+  }, []);
+
   const [currentPage, setCurrentPage] = useState(1);
   const [postsPerPage] = useState(24);
   const { loading, error, data } = useGetPosts();
@@ -76,6 +98,7 @@ function IndexPage(props: HomePageProps) {
 
   return (
     <>
+      <ToastContainer align={'left'} />
       <TopBanner datas={TopPostData?.topFivePost.length} />
       <Top>
         <div>
