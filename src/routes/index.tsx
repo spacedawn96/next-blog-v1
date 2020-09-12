@@ -18,7 +18,6 @@ const TopBackground = styled.div`
   flex-wrap: wrap;
   width: 90%;
   margin: 0 auto;
-  height: 50vh;
   padding: 1rem;
   ${media.custom(1900)} {
     height: auto;

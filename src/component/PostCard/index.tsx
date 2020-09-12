@@ -14,9 +14,9 @@ const PostCardTap = styled.div<{
   margin: 0 auto;
   flex-wrap: wrap;
   .post-wrapper {
-    width: ${props => (props.large ? '450px' : '320px')};
+    width: ${props => (props.large ? '350px' : '320px')};
     margin: 0 auto;
-    height: ${props => (props.large ? '400px' : '300px')};
+    height: ${props => (props.large ? '400px' : '330px')};
     padding-bottom: 3rem;
     border-radius: 8px;
     box-shadow: 0px 10px 20px rgba(10, 33, 65, 0.05), 0px 0px 2px rgba(0, 0, 0, 0.13);
@@ -31,39 +31,26 @@ const PostCardTap = styled.div<{
       cursor: pointer;
       opacity: 1;
     }
-    ${media.custom(570)} {
-      width: ${props => (props.large ? '400px' : '320px')};
-      height: ${props => (props.large ? '270px' : '270px')};
-    }
 
-    ${media.custom(500)} {
-      width: ${props => (props.large ? '350px' : '320px')};
-    }
-
-    ${media.custom(420)} {
+    ${media.custom(430)} {
       width: ${props => (props.large ? '300px' : '300px')};
-      height: ${props => (props.large ? '280px' : '280px')};
+      height: ${props => (props.large ? '300px' : '300px')};
     }
 
-    ${media.custom(360)} {
+    ${media.custom(380)} {
       width: ${props => (props.large ? '260px' : '260px')};
     }
   }
 
   .img {
     height: 250px;
-    width: 450px;
-    ${media.custom(570)} {
-      height: 170px;
-      width: 400px;
-    }
-    ${media.custom(500)} {
-      width: 350px;
-    }
-    ${media.custom(420)} {
+    width: 350px;
+
+    ${media.custom(430)} {
       width: 300px;
+      height: 200px;
     }
-    ${media.custom(360)} {
+    ${media.custom(380)} {
       width: 260px;
     }
   }
@@ -80,12 +67,13 @@ const PostCardTap = styled.div<{
   }
   .smallImg {
     width: 320px;
-    height: 200px;
-    ${media.custom(570)} {
-      height: 180px;
+    height: 220px;
+
+    ${media.custom(430)} {
       width: 300px;
+      height: 200px;
     }
-    ${media.custom(360)} {
+    ${media.custom(380)} {
       width: 260px;
     }
   }

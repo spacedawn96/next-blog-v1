@@ -196,6 +196,7 @@ $font: 'Lato', sans-serif;
   left: 25%;
   outline: 0;
   border: none;
+  cursor: pointer;
   box-shadow: 2px 2px 10px rgba($dark, .5);
   transition: all .5s ease-in-out;
   &:hover {

@@ -10,6 +10,12 @@ const FooterTap = styled.div`
 
   .patterns {
     height: 25vh;
+    ${media.custom(1000)} {
+      height: 20vh;
+    }
+    ${media.custom(450)} {
+      height: 10vh;
+    }
   }
 
   svg text {
@@ -25,7 +31,13 @@ const FooterTap = styled.div`
       font-size: 100px;
     }
     ${media.custom(700)} {
+      font-size: 80px;
+    }
+    ${media.custom(550)} {
       font-size: 60px;
+    }
+    ${media.custom(450)} {
+      font-size: 50px;
     }
     ${media.custom(450)} {
       font-size: 40px;

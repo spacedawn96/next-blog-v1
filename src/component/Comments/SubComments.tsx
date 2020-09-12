@@ -18,6 +18,9 @@ const SubCommentsTap = styled.div`
   .sub-color {
     color: rgb(134, 142, 150);
   }
+  .comments-edit-wrapper {
+    cursor: pointer;
+  }
 `;
 
 export type SubCommentsProps = {

@@ -90,6 +90,7 @@ const PostPageTap = styled.div`
   }
   .intro-wrapper {
     margin: 1rem 0;
+    line-height: 1.6;
   }
   .comments-wrapper {
     width: 40%;
@@ -119,6 +120,7 @@ const PostPageTap = styled.div`
 
   .comments-edit {
     display: flex;
+    cursor: pointer;
     & div {
       margin-right: 1rem;
     }
@@ -185,6 +187,7 @@ const PostPageTap = styled.div`
     }
   }
   .edit-button {
+    cursor: pointer;
     display: flex;
     & div {
       margin-right: 0.4rem;

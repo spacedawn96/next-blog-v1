@@ -118,6 +118,7 @@ const EditorMainTap = styled.div`
     margin-left: 0.6rem;
   }
   .draft-editor-body {
+    line-height: 1.6;
     min-height: 9rem;
     border-radius: 0 0 3px 3px;
     background-color: #fff;
@@ -141,6 +142,7 @@ const EditorMainTap = styled.div`
     }
   }
   .post-button {
+    cursor: pointer;
     border-radius: 10px;
     font-size: 13px;
     float: right;
@@ -410,7 +412,7 @@ function EditorMain(props: EditorMainProps) {
 
   const onClickNotifyCheckString = e => {
     e.preventDefault();
-    toast.notify(`제목이 비엇습니다`, {
+    toast.notify(`제목을 입력해주세요`, {
       duration: 2,
       type: 'error',
     });
