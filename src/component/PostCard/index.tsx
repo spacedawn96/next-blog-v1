@@ -38,7 +38,6 @@ const PostCardTap = styled.div<{
 
     ${media.custom(500)} {
       width: ${props => (props.large ? '350px' : '320px')};
-     
     }
 
     ${media.custom(420)} {
@@ -49,13 +48,24 @@ const PostCardTap = styled.div<{
     ${media.custom(360)} {
       width: ${props => (props.large ? '260px' : '260px')};
     }
- 
-  
   }
 
   .img {
     height: 250px;
     width: 450px;
+    ${media.custom(570)} {
+      height: 170px;
+      width: 400px;
+    }
+    ${media.custom(500)} {
+      width: 350px;
+    }
+    ${media.custom(420)} {
+      width: 300px;
+    }
+    ${media.custom(360)} {
+      width: 260px;
+    }
   }
   .tag {
     position: absolute;
@@ -71,6 +81,13 @@ const PostCardTap = styled.div<{
   .smallImg {
     width: 320px;
     height: 200px;
+    ${media.custom(570)} {
+      height: 180px;
+      width: 300px;
+    }
+    ${media.custom(360)} {
+      width: 260px;
+    }
   }
   h4 {
     font-size: 1rem;

@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import Buttons from '../common/Button';
 import media from 'src/styles/media';
 import { checkEmpty } from 'src/utils/isNull';
+import { MeQuery } from 'src/type/apolloComponent';
 
 const CommentFormTap = styled.div`
   ${media.custom(400)} {
@@ -26,9 +27,9 @@ export type CommentFormProps = {
   getText: string;
   textOnChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   findId: React.FormEvent<HTMLFormElement>;
-  userData;
-  onClickNotify;
-  onClickNotifyCheckString
+  userData: MeQuery;
+  onClickNotify: (e: any) => void;
+  onClickNotifyCheckString: (e: React.FormEvent<HTMLFormElement>) => void;
 };
 
 function CommentForm(props: CommentFormProps) {
@@ -40,13 +41,12 @@ function CommentForm(props: CommentFormProps) {
 
   return (
     <CommentFormTap>
-      
       <form
         onSubmit={e => {
-          props.userData.me
-            ? e.preventDefault()
-            : props.onClickNotify(e);
-            checkEmpty(Text) ?  props.onClickNotifyCheckString(e): props.handleSubmit(e, props.findId, Text)
+          props.userData.me ? e.preventDefault() : props.onClickNotify(e);
+          checkEmpty(Text)
+            ? props.onClickNotifyCheckString(e)
+            : props.handleSubmit(e, props.findId, Text);
           props.userData.me ? setText('') : '';
         }}>
         <input

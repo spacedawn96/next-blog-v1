@@ -2,17 +2,22 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import Buttons from 'src/component/common/Button';
 import { checkEmpty } from 'src/utils/isNull';
+import { MeQuery } from 'src/type/apolloComponent';
 const SubCommentsFormTap = styled.div``;
 
 export type SubCommentsFormProps = {
-  userData;
-  subHandleSubmit;
-  findData;
-  onClickNotify;
-  isOpen;
-  on;
-  toggle;
-  onClickNotifyCheckString;
+  userData: MeQuery;
+  subHandleSubmit: (
+    e: React.FormEvent<HTMLFormElement>,
+    findId: string,
+    SubText: string,
+  ) => Promise<void>;
+  findData: any;
+  onClickNotify: (e: React.FormEvent<HTMLFormElement>) => void;
+  isOpen: string;
+  on: boolean;
+  toggle: React.Dispatch<React.SetStateAction<boolean>>;
+  onClickNotifyCheckString: (e: React.FormEvent<HTMLFormElement>) => void;
 };
 
 function SubCommentsForm(props: SubCommentsFormProps) {

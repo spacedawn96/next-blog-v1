@@ -4,22 +4,26 @@ import { IoIosAddCircleOutline } from 'react-icons/io';
 import { RiArrowDropDownLine } from 'react-icons/ri';
 import useGetUser from '../TopBanner.tsx/hooks/useGetUser';
 import { checkEmpty } from 'src/utils/isNull';
+import { MeQuery } from 'src/type/apolloComponent';
 
 const CommentsTap = styled.div``;
 
 export type CommentsProps = {
   el: any;
-  editComment;
-  editText;
-  editCommentInput;
-  setIsopen;
-  toggle;
-  on;
-  EditCommentSubmit;
-  fixComment;
-  DeleteCommentSubmit;
-  userData;
-  onClickNotifyCheckString;
+  editComment: boolean;
+  editText: string;
+  editCommentInput: (e: React.FormEvent<HTMLFormElement>) => void;
+  setIsopen: React.Dispatch<React.SetStateAction<string>>;
+  toggle: React.Dispatch<React.SetStateAction<boolean>>;
+  on: boolean;
+  EditCommentSubmit: (e: any, commentId: string, text: string) => Promise<void>;
+  fixComment: () => void;
+  DeleteCommentSubmit: (
+    e: React.MouseEvent<HTMLDivElement, MouseEvent>,
+    commentId: string,
+  ) => Promise<void>;
+  userData: MeQuery;
+  onClickNotifyCheckString: (e: any) => void;
 };
 
 function Comments(props: CommentsProps) {
@@ -38,6 +42,7 @@ function Comments(props: CommentsProps) {
   const fixSubComment = () => {
     setEditSubComment(!editSubComment);
   };
+  console.log(props.el);
 
   return (
     <>

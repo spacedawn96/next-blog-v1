@@ -424,10 +424,12 @@ function PostPage(props: PostPageProps) {
                 </>
               ) : (
                 <>
-                  <TiHeartOutline onClick={e => onClickNotify(e)} />
-                  <div className="follow-visible">
-                    <AiOutlineUserAdd onClick={e => onClickNotify(e)} />
-                  </div>
+                  <LikeVisible>
+                    <TiHeartOutline onClick={e => onClickNotify(e)} />
+                    <div className="follow-visible">
+                      <AiOutlineUserAdd onClick={e => onClickNotify(e)} />
+                    </div>
+                  </LikeVisible>
                 </>
               )}
             </div>

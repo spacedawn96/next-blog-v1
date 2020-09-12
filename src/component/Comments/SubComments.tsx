@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { MeQuery } from 'src/type/apolloComponent';
 import { checkEmpty } from 'src/utils/isNull';
 import styled from 'styled-components';
 
@@ -20,15 +21,18 @@ const SubCommentsTap = styled.div`
 `;
 
 export type SubCommentsProps = {
-  ele;
-  el;
-  subEditText;
-  editSubCommentInput;
-  EditCommentSubmit;
-  DeleteCommentSubmit;
-  userData;
-  findData;
-  onClickNotifyCheckString;
+  ele: any;
+  el: any;
+  subEditText: string;
+  editSubCommentInput: (e: any) => void;
+  EditCommentSubmit: (e: any, commentId: string, text: string) => Promise<void>;
+  DeleteCommentSubmit: (
+    e: React.MouseEvent<HTMLDivElement, MouseEvent>,
+    commentId: string,
+  ) => Promise<void>;
+  userData: MeQuery;
+  findData: any;
+  onClickNotifyCheckString: (e: any) => void;
 };
 
 function SubComments(props: SubCommentsProps) {
