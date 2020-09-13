@@ -17,13 +17,13 @@ function App({ Component, pageProps }) {
   const apolloClient = useApollo(pageProps.initialApolloState);
 
   return (
-    <ToastProvider placement="bottom-right" TransitionState="entering">
-      <Provider store={store}>
-        <ApolloProvider client={apolloClient}>
+    <Provider store={store}>
+      <ApolloProvider client={apolloClient}>
+        <ToastProvider placement="bottom-right">
           <Component {...pageProps} />
-        </ApolloProvider>
-      </Provider>
-    </ToastProvider>
+        </ToastProvider>
+      </ApolloProvider>
+    </Provider>
   );
 }
 

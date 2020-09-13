@@ -15,13 +15,12 @@ const PostCardTap = styled.div<{
   flex-wrap: wrap;
   margin-top: 1rem;
   .post-wrapper {
-    width: ${props => (props.large ? '340px' : '320px')};
+    width: ${props => (props.large ? '450px' : '320px')};
     margin: 0 auto;
-    height: ${props => (props.large ? '360px' : '330px')};
-    padding-bottom: 6rem;
+    height: ${props => (props.large ? '420px' : '350px')};
     border-radius: 8px;
     box-shadow: 0px 10px 20px rgba(10, 33, 65, 0.05), 0px 0px 2px rgba(0, 0, 0, 0.13);
-    margin-top: 2.5rem;
+    margin-bottom: 1rem;
     background: #fff;
     transition: all 0.5s ease;
     border-bottom-left-radius: 0;
@@ -31,24 +30,36 @@ const PostCardTap = styled.div<{
       cursor: pointer;
       opacity: 1;
     }
+
+    ${media.custom(600)} {
+      width: ${props => (props.large ? '350px' : '350px')};
+    }
     ${media.custom(430)} {
       width: ${props => (props.large ? '300px' : '300px')};
-      height: ${props => (props.large ? '300px' : '300px')};
+      height: ${props => (props.large ? '250px' : '250px')};
+      padding-bottom: 7rem;
     }
     ${media.custom(380)} {
       width: ${props => (props.large ? '260px' : '260px')};
+      height: ${props => (props.large ? '180px' : '180px')};
     }
   }
   .img {
     height: 250px;
-    width: 340px;
-    object-fit: fill;
+    width: 450px;
+    object-fit: cover;
+
+    ${media.custom(600)} {
+      width: ${props => (props.large ? '350px' : '350px')};
+      height: ${props => (props.large ? '250px' : '250px')};
+    }
     ${media.custom(430)} {
       width: 300px;
-      height: 250px;
+      height: 200px;
     }
     ${media.custom(380)} {
       width: 260px;
+      height: 140px;
     }
   }
   .tag {
@@ -59,19 +70,22 @@ const PostCardTap = styled.div<{
   }
   .withoutImg {
     background: #fff;
-    height: ${props => (props.thumbnail ? '150x' : '300px')};
     padding: 1rem;
   }
   .smallImg {
-    object-fit: fill;
+    object-fit: cover;
     width: 320px;
-    height: 250px;
+    height: 200px;
+    ${media.custom(600)} {
+      width: ${props => (props.large ? '350px' : '350px')};
+    }
     ${media.custom(430)} {
       width: 300px;
-      height: 250px;
+      height: 200px;
     }
     ${media.custom(380)} {
       width: 260px;
+      height: 140px;
     }
   }
   h4 {

@@ -25,6 +25,9 @@ const BarCenter = styled.div`
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial,
     sans-serif;
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2), 0 5px 10px rgba(0, 0, 0, 0.2);
+  ${media.custom(400)} {
+    padding-top: 2rem;
+  }
 `;
 
 const Barlog = styled.div`
