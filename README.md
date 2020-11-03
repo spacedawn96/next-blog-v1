@@ -7,3 +7,5 @@
 - Styled Components
 - draft js
 - Typescript
+
+# server : https://github.com/spacedawn96/graphql-blog-v1
